@@ -43,6 +43,61 @@ function renderSpans(children: PTSpan[] = [], markDefs: PTBlock['markDefs'] = []
     .join('');
 }
 
+export interface TocEntry {
+  label: string;
+  id: string;
+}
+
+export function renderArticleBody(blocks: PTBlock[] | undefined | null): { html: string; toc: TocEntry[] } {
+  if (!blocks || blocks.length === 0) return { html: '', toc: [] };
+  let html = '';
+  let listOpen: 'bullet' | 'number' | null = null;
+  const toc: TocEntry[] = [];
+  let h2count = 0;
+
+  const closeList = () => {
+    if (listOpen === 'bullet') html += '</ul>';
+    if (listOpen === 'number') html += '</ol>';
+    listOpen = null;
+  };
+
+  for (const block of blocks) {
+    if (block._type !== 'block') continue;
+
+    if (block.listItem) {
+      if (listOpen !== block.listItem) {
+        closeList();
+        html += block.listItem === 'bullet' ? '<ul>' : '<ol>';
+        listOpen = block.listItem;
+      }
+      html += `<li>${renderSpans(block.children, block.markDefs)}</li>`;
+      continue;
+    }
+
+    closeList();
+
+    const inner = renderSpans(block.children, block.markDefs);
+    if (!inner.trim()) continue;
+
+    if (block.style === 'h2') {
+      const id = `sec-${h2count++}`;
+      const plainText = (block.children ?? []).map((c) => c.text).join('');
+      toc.push({ label: plainText, id });
+      html += `<h2 id="${id}">${inner}</h2>`;
+    } else if (block.style === 'h3') {
+      html += `<h3>${inner}</h3>`;
+    } else if (block.style === 'h4') {
+      html += `<h4>${inner}</h4>`;
+    } else if (block.style === 'blockquote') {
+      html += `<blockquote>${inner}</blockquote>`;
+    } else {
+      html += `<p>${inner}</p>`;
+    }
+  }
+  closeList();
+  return { html, toc };
+}
+
 export function renderPortableText(blocks: PTBlock[] | undefined | null): string {
   if (!blocks || blocks.length === 0) return '';
   let html = '';
@@ -73,11 +128,17 @@ export function renderPortableText(blocks: PTBlock[] | undefined | null): string
     if (!inner.trim()) continue;
 
     switch (block.style) {
+      case 'h2':
+        html += `<h2>${inner}</h2>`;
+        break;
       case 'h3':
         html += `<h3>${inner}</h3>`;
         break;
       case 'h4':
         html += `<h4>${inner}</h4>`;
+        break;
+      case 'blockquote':
+        html += `<blockquote>${inner}</blockquote>`;
         break;
       default:
         html += `<p>${inner}</p>`;

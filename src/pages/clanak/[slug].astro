@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getCategory, authors, affiliates, imgBg, fmtDate } from '../../data/site';
 import { articles, getArticleBySlug } from '../../data/articles';
-import { renderPortableText } from '../../lib/portableText';
+import { renderArticleBody } from '../../lib/portableText';
 import { urlForImage } from '../../lib/sanity';
 
 export function getStaticPaths() {
@@ -21,14 +21,10 @@ const seoTitle = article.seo?.metaTitle || article.title;
 const seoDescription = article.seo?.metaDescription || article.excerpt;
 const coverUrl = article.coverImage ? urlForImage(article.coverImage).width(1200).height(720).url() : null;
 
-const sections = article.sections.map((s, i) => ({
-  ...s,
-  id: `sec-${i}`,
-  paragraphHtml: renderPortableText(s.paragraph),
-}));
-const toc = sections
-  .map((s) => ({ label: s.heading, href: `#${s.id}` }))
-  .concat([{ label: 'Često postavljana pitanja', href: '#faq' }]);
+const { html: bodyHtml, toc: bodyToc } = renderArticleBody(article.body);
+const toc = bodyToc
+  .map((t) => ({ label: t.label, href: `#${t.id}` }))
+  .concat(article.faq?.length ? [{ label: 'Često postavljana pitanja', href: '#faq' }] : []);
 
 const related = article.related.map((s) => getArticleBySlug(s)).filter(Boolean) as typeof articles;
 const shortTitle = article.title.length > 40 ? article.title.slice(0, 40) + '…' : article.title;
@@ -59,74 +55,13 @@ const shortTitle = article.title.length > 40 ? article.title.slice(0, 40) + '…
           <span>· {article.readMin} min čitanja</span>
         </div>
 
-        <p style="font-size:16.5px; line-height:1.75; margin:0 0 26px;">{article.intro}</p>
-
         {coverUrl && (
           <img src={coverUrl} alt={article.title} width="1200" height="720" style="width:100%; height:auto; aspect-ratio:5/3; object-fit:cover; border-radius:14px; margin-bottom:28px;" />
         )}
 
-        {article.warning && (
-          <div style="display:flex; gap:12px; padding:16px 18px; border-radius:10px; background:color-mix(in oklab, var(--accent) 10%, var(--bg-surface)); border:1px solid var(--border); margin-bottom:28px;">
-            <span style="font-weight:800; color:var(--accent); flex-shrink:0;">Pazi!</span>
-            <p style="margin:0; font-size:14.5px; line-height:1.6;">{article.warning}</p>
-          </div>
-        )}
+        <div class="dby-rich-text" style="font-size:15.5px; line-height:1.7; margin:0 0 30px; color:var(--text);" set:html={bodyHtml} />
 
-        {sections.map((sec) => (
-          <div style="margin-bottom:30px;">
-            <h2 id={sec.id} style="font-size:21px; font-weight:800; letter-spacing:-0.01em; margin:0 0 12px; scroll-margin-top:80px;">{sec.heading}</h2>
-            <div class="dby-rich-text" style="font-size:15.5px; line-height:1.7; margin:0 0 16px; color:var(--text);" set:html={sec.paragraphHtml} />
-
-            {sec.block?.blockType === 'checklist' && (
-              <div style="display:flex; flex-direction:column; gap:10px; background:var(--bg-surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px;">
-                {sec.block.items?.map((it) => (
-                  <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.5;">
-                    <span style="width:16px; height:16px; border-radius:4px; border:1.5px solid var(--accent); flex-shrink:0; margin-top:2px;"></span>
-                    {it}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {sec.block?.blockType === 'steps' && (
-              <div style="display:flex; flex-direction:column; gap:14px;">
-                {sec.block.items?.map((it, si) => (
-                  <div style="display:flex; gap:14px; align-items:flex-start;">
-                    <span style="width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">{si + 1}</span>
-                    <p style="margin:0; font-size:14.5px; line-height:1.6; padding-top:2px;">{it}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {sec.block?.blockType === 'warning' && (
-              <div style="display:flex; gap:12px; padding:16px 18px; border-radius:10px; background:color-mix(in oklab, var(--accent) 10%, var(--bg-surface)); border:1px solid var(--border);">
-                <span style="font-weight:800; color:var(--accent); flex-shrink:0;">Pazi!</span>
-                <p style="margin:0; font-size:14.5px; line-height:1.6;">{sec.block.text}</p>
-              </div>
-            )}
-
-            {sec.block?.blockType === 'tip' && (
-              <div style="display:flex; gap:12px; padding:16px 18px; border-radius:10px; background:var(--bg-surface-2); border:1px solid var(--border);">
-                <span style="font-weight:800; flex-shrink:0;">Savjet</span>
-                <p style="margin:0; font-size:14.5px; line-height:1.6;">{sec.block.text}</p>
-              </div>
-            )}
-
-            {sec.block?.blockType === 'table' && (
-              <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden;">
-                <div style="font-size:12.5px; font-weight:700; padding:12px 16px; background:var(--bg-surface-2); border-bottom:1px solid var(--border);">{sec.block.caption}</div>
-                {sec.block.rows?.map((row) => (
-                  <div style="display:flex; justify-content:space-between; gap:16px; padding:12px 16px; border-bottom:1px solid var(--border); font-size:14px;">
-                    <span style="color:var(--text-muted);">{row.label}</span>
-                    <span style="font-weight:600; text-align:right;">{row.value}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-
+        {article.faq?.length > 0 && (
         <div style="margin-bottom:36px;">
           <h2 id="faq" style="font-size:21px; font-weight:800; margin:0 0 16px; scroll-margin-top:80px;">Često postavljana pitanja</h2>
           <div style="display:flex; flex-direction:column; gap:10px;">
@@ -138,6 +73,7 @@ const shortTitle = article.title.length > 40 ? article.title.slice(0, 40) + '…
             ))}
           </div>
         </div>
+        )}
 
         <div style="border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:32px; background:var(--bg-surface-2);">
           <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:10px;">Oglas · preporučeni proizvod</div>

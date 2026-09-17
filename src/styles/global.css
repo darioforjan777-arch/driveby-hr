@@ -61,6 +61,13 @@ body {
 .dby-rich-text p {
   margin: 0 0 14px;
 }
+.dby-rich-text h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 30px 0 12px;
+  scroll-margin-top: 80px;
+}
 .dby-rich-text h3 {
   font-size: 18px;
   font-weight: 800;
@@ -70,6 +77,18 @@ body {
   font-size: 16px;
   font-weight: 700;
   margin: 16px 0 8px;
+}
+.dby-rich-text blockquote {
+  margin: 0 0 16px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--accent) 10%, var(--bg-surface));
+  border: 1px solid var(--border);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.dby-rich-text blockquote p {
+  margin: 0;
 }
 .dby-rich-text ul,
 .dby-rich-text ol {

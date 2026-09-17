@@ -1,19 +1,5 @@
 import { sanityClient } from '../lib/sanity';
 
-export interface Block {
-  blockType: 'none' | 'checklist' | 'steps' | 'warning' | 'tip' | 'table' | undefined;
-  items?: string[];
-  text?: string;
-  caption?: string;
-  rows?: { label: string; value: string }[];
-}
-
-export interface Section {
-  heading: string;
-  paragraph: any[]; // Portable Text blocks — rendered via renderPortableText()
-  block?: Block;
-}
-
 export interface FAQItem {
   q: string;
   a: string;
@@ -30,9 +16,7 @@ export interface Article {
   updated?: string;
   popular?: boolean;
   featured?: boolean;
-  intro: string;
-  warning?: string;
-  sections: Section[];
+  body: any[]; // Portable Text blocks — rendered via renderPortableText()
   faq: FAQItem[];
   related: string[];
   seo?: { metaTitle?: string; metaDescription?: string };
@@ -50,9 +34,7 @@ const QUERY = /* groq */ `
   updated,
   popular,
   featured,
-  intro,
-  warning,
-  sections,
+  body,
   faq,
   "related": related[]->slug.current,
   seo
