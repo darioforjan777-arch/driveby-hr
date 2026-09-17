@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Kontakt" description="Pitanje, ispravka ili prijedlog teme? Javite se.">
+  <div style="max-width:560px; margin:0 auto; padding:56px 20px 80px;">
+    <h1 style="font-size:clamp(26px,4.5vw,36px); font-weight:800; letter-spacing:-0.02em; margin:0 0 14px;">Kontakt</h1>
+    <p style="font-size:15.5px; line-height:1.7; color:var(--text-muted); margin:0 0 28px;">Pitanje, ispravka ili prijedlog teme? Javite se – odgovaramo osobno, obično u roku od nekoliko dana.</p>
+
+    <div id="dby-contact-thanks" style="display:none; padding:20px; border-radius:12px; background:var(--bg-surface-2); border:1px solid var(--border); font-size:15px; font-weight:600;">Poruka je poslana. Hvala, javit ćemo se!</div>
+
+    <form id="dby-contact-form" style="display:flex; flex-direction:column; gap:16px;">
+      <label style="display:flex; flex-direction:column; gap:6px; font-size:13.5px; font-weight:600;">
+        Ime
+        <input name="name" required type="text" placeholder="Vaše ime" style="font:inherit; font-size:14.5px; padding:12px 14px; border-radius:9px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); outline:none;" />
+      </label>
+      <label style="display:flex; flex-direction:column; gap:6px; font-size:13.5px; font-weight:600;">
+        E-mail
+        <input name="email" required type="email" placeholder="vasa@email.hr" style="font:inherit; font-size:14.5px; padding:12px 14px; border-radius:9px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); outline:none;" />
+      </label>
+      <label style="display:flex; flex-direction:column; gap:6px; font-size:13.5px; font-weight:600;">
+        Poruka
+        <textarea name="message" required rows="5" placeholder="Napišite poruku..." style="font:inherit; font-size:14.5px; padding:12px 14px; border-radius:9px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); outline:none; resize:vertical;"></textarea>
+      </label>
+      <button type="submit" style="font:inherit; font-size:14.5px; font-weight:700; padding:13px 20px; border-radius:9px; border:none; background:var(--accent); color:#fff; cursor:pointer; align-self:flex-start;">Pošalji poruku</button>
+    </form>
+  </div>
+</BaseLayout>
+
+<script>
+  function initContactForm() {
+    const form = document.getElementById('dby-contact-form');
+    const thanks = document.getElementById('dby-contact-thanks');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // TODO: poveži s pravim slanjem e-maila (npr. Formspree, Resend) prije objave uživo.
+      if (form instanceof HTMLElement) form.style.display = 'none';
+      if (thanks) thanks.style.display = 'block';
+    });
+  }
+  initContactForm();
+  document.addEventListener('astro:page-load', initContactForm);
+</script>

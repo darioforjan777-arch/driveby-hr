@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { categories, getCategory } from '../../data/site';
+import { getArticlesByCategory } from '../../data/articles';
+
+export function getStaticPaths() {
+  return categories.map((cat) => ({ params: { slug: cat.slug } }));
+}
+
+const { slug } = Astro.params;
+const cat = getCategory(slug as string)!;
+const list = getArticlesByCategory(cat.slug).sort(
+  (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime()
+);
+const popularList = list.filter((a) => a.popular).concat(list.filter((a) => !a.popular));
+---
+
+<BaseLayout title={cat.name} description={cat.intro} activeCategorySlug={cat.slug}>
+  <section style="max-width:1200px; margin:0 auto; padding:40px 20px 8px;">
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+      <a href="/" style="color:var(--text-muted);" class="link-hover">Naslovnica</a> / {cat.name}
+    </div>
+    <h1 style="font-size:clamp(24px,4vw,34px); font-weight:800; letter-spacing:-0.02em; margin:0 0 12px;">{cat.name}</h1>
+    <p style="font-size:15px; color:var(--text-muted); line-height:1.65; max-width:680px; margin:0;">{cat.intro}</p>
+  </section>
+
+  <section style="max-width:1200px; margin:0 auto; padding:28px 20px 8px; display:flex; gap:10px; flex-wrap:wrap;">
+    <button type="button" data-filter="sve" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer;">Sve</button>
+    <button type="button" data-filter="najnovije" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); cursor:pointer;">Najnovije</button>
+    <button type="button" data-filter="najcitanije" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); cursor:pointer;">Najčitanije</button>
+  </section>
+
+  <section style="max-width:1200px; margin:0 auto; padding:24px 20px 60px;">
+    <div id="dby-grid-sve" class="dby-cat-grid" style="display:grid; gap:22px;">
+      {list.map((a) => (
+        <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
+      ))}
+    </div>
+    <div id="dby-grid-najnovije" class="dby-cat-grid" style="display:none; gap:22px;">
+      {list.map((a) => (
+        <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
+      ))}
+    </div>
+    <div id="dby-grid-najcitanije" class="dby-cat-grid" style="display:none; gap:22px;">
+      {popularList.map((a) => (
+        <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
+      ))}
+    </div>
+    {list.length === 0 && <p style="color:var(--text-muted); font-size:14px;">Nema članaka za odabrani filter.</p>}
+  </section>
+</BaseLayout>
+
+<script>
+  function initFilters() {
+    const buttons = document.querySelectorAll('.dby-filter-btn');
+    const grids: Record<string, HTMLElement | null> = {
+      sve: document.getElementById('dby-grid-sve'),
+      najnovije: document.getElementById('dby-grid-najnovije'),
+      najcitanije: document.getElementById('dby-grid-najcitanije'),
+    };
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter') || 'sve';
+        buttons.forEach((b) => {
+          const active = b === btn;
+          (b as HTMLElement).style.background = active ? 'var(--accent)' : 'var(--bg-surface)';
+          (b as HTMLElement).style.color = active ? '#fff' : 'var(--text)';
+          (b as HTMLElement).style.borderColor = active ? 'var(--accent)' : 'var(--border)';
+        });
+        Object.entries(grids).forEach(([key, el]) => {
+          if (el) el.style.display = key === filter ? 'grid' : 'none';
+        });
+      });
+    });
+  }
+  initFilters();
+  document.addEventListener('astro:page-load', initFilters);
+</script>

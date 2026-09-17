@@ -1,0 +1,76 @@
+---
+import { siteName, categories } from '../data/site';
+const year = new Date().getFullYear();
+const socials = [
+  { name: 'Facebook', initial: 'FB', href: '#facebook' },
+  { name: 'Instagram', initial: 'IG', href: '#instagram' },
+  { name: 'YouTube', initial: 'YT', href: '#youtube' },
+  { name: 'TikTok', initial: 'TT', href: '#tiktok' },
+];
+---
+
+<footer style="background:var(--bg-surface-2); border-top:1px solid var(--border); margin-top:64px;">
+  <div class="dby-footer-grid" style="max-width:1200px; margin:0 auto; padding:48px 20px 28px; display:grid; gap:32px;">
+    <div>
+      <div style="font-weight:800; font-size:19px; color:var(--text); margin-bottom:10px;">{siteName}<span style="color:var(--accent);">.</span></div>
+      <p style="font-size:14px; color:var(--text-muted); line-height:1.6; max-width:320px; margin:0;">Praktični vodiči, iskustva i savjeti za vozače u Hrvatskoj — bez tuning žargona, bez napadnih reklama.</p>
+      <div style="display:flex; gap:10px; margin-top:18px;">
+        {socials.map((s) => (
+          <a href={s.href} aria-label={s.name} style="width:34px; height:34px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--text-muted);" class="card-hover link-hover">{s.initial}</a>
+        ))}
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:14px;">Kategorije</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        {categories.map((cat) => (
+          <a href={`/kategorija/${cat.slug}/`} style="font-size:14px; color:var(--text);" class="link-hover">{cat.name}</a>
+        ))}
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:14px;">Stranica</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <a href="/o-stranici/" style="font-size:14px; color:var(--text);" class="link-hover">O stranici</a>
+        <a href="/kontakt/" style="font-size:14px; color:var(--text);" class="link-hover">Kontakt</a>
+        <a href="#privatnost" style="font-size:14px; color:var(--text);" class="link-hover">Privatnost</a>
+        <a href="#kolacici" style="font-size:14px; color:var(--text);" class="link-hover">Kolačići</a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1200px; margin:0 auto; padding:16px 20px 28px; border-top:1px solid var(--border); font-size:12.5px; color:var(--text-muted);">
+    © {year} {siteName}. Sav sadržaj informativne je naravi i ne zamjenjuje stručni servisni pregled.
+  </div>
+
+  <div id="dby-cookie-banner" style="display:none; position:fixed; left:0; right:0; bottom:0; z-index:60; background:var(--bg-surface); border-top:1px solid var(--border); box-shadow:0 -8px 24px rgba(0,0,0,0.1); animation:dby-cookie-in 0.2s ease-out;">
+    <div style="max-width:1200px; margin:0 auto; padding:16px 20px; display:flex; flex-wrap:wrap; align-items:center; gap:14px;">
+      <p style="flex:1; min-width:220px; font-size:13.5px; color:var(--text); margin:0; line-height:1.5;">Koristimo kolačiće za osnovno funkcioniranje stranice i analitiku posjeta. Više u <a href="#kolacici" style="color:var(--accent);">pravilima o kolačićima</a>.</p>
+      <div style="display:flex; gap:10px; flex-shrink:0;">
+        <button id="dby-cookie-decline" type="button" style="font:inherit; font-size:13px; font-weight:600; padding:9px 16px; border-radius:8px; border:1px solid var(--border); background:none; color:var(--text); cursor:pointer;">Odbij</button>
+        <button id="dby-cookie-accept" type="button" style="font:inherit; font-size:13px; font-weight:700; padding:9px 16px; border-radius:8px; border:none; background:var(--accent); color:#fff; cursor:pointer;">Prihvaćam</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function initCookieBanner() {
+    const banner = document.getElementById('dby-cookie-banner');
+    const accept = document.getElementById('dby-cookie-accept');
+    const decline = document.getElementById('dby-cookie-decline');
+    try {
+      const saved = localStorage.getItem('dby-cookie-choice');
+      if (!saved && banner) banner.style.display = 'block';
+    } catch (e) {}
+    accept?.addEventListener('click', () => {
+      try { localStorage.setItem('dby-cookie-choice', 'accepted'); } catch (e) {}
+      if (banner) banner.style.display = 'none';
+    });
+    decline?.addEventListener('click', () => {
+      try { localStorage.setItem('dby-cookie-choice', 'declined'); } catch (e) {}
+      if (banner) banner.style.display = 'none';
+    });
+  }
+  initCookieBanner();
+  document.addEventListener('astro:page-load', initCookieBanner);
+</script>

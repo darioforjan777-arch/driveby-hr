@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCategory, authors, affiliates, imgBg, fmtDate } from '../../data/site';
+import { articles, getArticleBySlug } from '../../data/articles';
+
+export function getStaticPaths() {
+  return articles.map((a) => ({ params: { slug: a.slug } }));
+}
+
+const { slug } = Astro.params;
+const article = getArticleBySlug(slug as string)!;
+const cat = getCategory(article.categorySlug)!;
+const author = authors[article.categorySlug];
+const affiliate = affiliates[article.categorySlug];
+const initials = author.name.split(' ').map((w) => w[0]).join('');
+
+const sections = article.sections.map((s, i) => ({ ...s, id: `sec-${i}` }));
+const toc = sections
+  .map((s) => ({ label: s.heading, href: `#${s.id}` }))
+  .concat([{ label: 'Često postavljana pitanja', href: '#faq' }]);
+
+const related = article.related.map((s) => getArticleBySlug(s)).filter(Boolean) as typeof articles;
+const shortTitle = article.title.length > 40 ? article.title.slice(0, 40) + '…' : article.title;
+---
+
+<BaseLayout title={article.title} description={article.excerpt} activeCategorySlug={cat.slug}>
+  <div style="max-width:1200px; margin:0 auto; padding:32px 20px 70px;">
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
+      <a href="/" style="color:var(--text-muted);" class="link-hover">Naslovnica</a> / <a href={`/kategorija/${cat.slug}/`} style="color:var(--text-muted);" class="link-hover">{cat.name}</a> / <span style="color:var(--text);">{shortTitle}</span>
+    </div>
+
+    <div class="dby-article-layout" style="display:grid; gap:44px;">
+      <aside class="dby-toc" style="position:sticky; top:80px; align-self:start;">
+        <div style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:12px;">Sadržaj</div>
+        <div style="display:flex; flex-direction:column; gap:9px;">
+          {toc.map((t) => (
+            <a href={t.href} style="font-size:13.5px; color:var(--text-muted); line-height:1.4;" class="link-hover">{t.label}</a>
+          ))}
+        </div>
+      </aside>
+
+      <article style="min-width:0;">
+        <div style="font-size:12.5px; font-weight:700; color:var(--accent); margin-bottom:10px;">{cat.name}</div>
+        <h1 style="font-size:clamp(26px,4.5vw,38px); font-weight:800; letter-spacing:-0.02em; line-height:1.2; margin:0 0 14px;">{article.title}</h1>
+        <div style="display:flex; flex-wrap:wrap; gap:14px; font-size:13px; color:var(--text-muted); margin-bottom:26px; border-bottom:1px solid var(--border); padding-bottom:20px;">
+          <span>Objavljeno {fmtDate(article.published)}</span>
+          {article.updated && <span>· Ažurirano {fmtDate(article.updated)}</span>}
+          <span>· {article.readMin} min čitanja</span>
+        </div>
+
+        <p style="font-size:16.5px; line-height:1.75; margin:0 0 26px;">{article.intro}</p>
+
+        {article.warning && (
+          <div style="display:flex; gap:12px; padding:16px 18px; border-radius:10px; background:color-mix(in oklab, var(--accent) 10%, var(--bg-surface)); border:1px solid var(--border); margin-bottom:28px;">
+            <span style="font-weight:800; color:var(--accent); flex-shrink:0;">Pazi!</span>
+            <p style="margin:0; font-size:14.5px; line-height:1.6;">{article.warning}</p>
+          </div>
+        )}
+
+        {sections.map((sec) => (
+          <div style="margin-bottom:30px;">
+            <h2 id={sec.id} style="font-size:21px; font-weight:800; letter-spacing:-0.01em; margin:0 0 12px; scroll-margin-top:80px;">{sec.heading}</h2>
+            <p style="font-size:15.5px; line-height:1.7; margin:0 0 16px; color:var(--text);">{sec.paragraph}</p>
+
+            {sec.block?.type === 'checklist' && (
+              <div style="display:flex; flex-direction:column; gap:10px; background:var(--bg-surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px;">
+                {sec.block.items.map((it) => (
+                  <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.5;">
+                    <span style="width:16px; height:16px; border-radius:4px; border:1.5px solid var(--accent); flex-shrink:0; margin-top:2px;"></span>
+                    {it}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {sec.block?.type === 'steps' && (
+              <div style="display:flex; flex-direction:column; gap:14px;">
+                {sec.block.items.map((it, si) => (
+                  <div style="display:flex; gap:14px; align-items:flex-start;">
+                    <span style="width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">{si + 1}</span>
+                    <p style="margin:0; font-size:14.5px; line-height:1.6; padding-top:2px;">{it}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {sec.block?.type === 'warning' && (
+              <div style="display:flex; gap:12px; padding:16px 18px; border-radius:10px; background:color-mix(in oklab, var(--accent) 10%, var(--bg-surface)); border:1px solid var(--border);">
+                <span style="font-weight:800; color:var(--accent); flex-shrink:0;">Pazi!</span>
+                <p style="margin:0; font-size:14.5px; line-height:1.6;">{sec.block.text}</p>
+              </div>
+            )}
+
+            {sec.block?.type === 'tip' && (
+              <div style="display:flex; gap:12px; padding:16px 18px; border-radius:10px; background:var(--bg-surface-2); border:1px solid var(--border);">
+                <span style="font-weight:800; flex-shrink:0;">Savjet</span>
+                <p style="margin:0; font-size:14.5px; line-height:1.6;">{sec.block.text}</p>
+              </div>
+            )}
+
+            {sec.block?.type === 'table' && (
+              <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+                <div style="font-size:12.5px; font-weight:700; padding:12px 16px; background:var(--bg-surface-2); border-bottom:1px solid var(--border);">{sec.block.caption}</div>
+                {sec.block.rows.map((row) => (
+                  <div style="display:flex; justify-content:space-between; gap:16px; padding:12px 16px; border-bottom:1px solid var(--border); font-size:14px;">
+                    <span style="color:var(--text-muted);">{row[0]}</span>
+                    <span style="font-weight:600; text-align:right;">{row[1]}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+
+        <div style="margin-bottom:36px;">
+          <h2 id="faq" style="font-size:21px; font-weight:800; margin:0 0 16px; scroll-margin-top:80px;">Često postavljana pitanja</h2>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            {article.faq.map((f) => (
+              <details style="border:1px solid var(--border); border-radius:10px; padding:14px 16px; background:var(--bg-surface);">
+                <summary style="font-size:14.5px; font-weight:700; cursor:pointer;">{f.q}</summary>
+                <p style="margin:10px 0 0; font-size:14px; line-height:1.6; color:var(--text-muted);">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+
+        <div style="border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:32px; background:var(--bg-surface-2);">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:10px;">Oglas · preporučeni proizvod</div>
+          <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+            <div style={`width:64px; height:64px; border-radius:10px; background:oklch(0.85 0.06 ${affiliate.hue}); flex-shrink:0;`}></div>
+            <div style="flex:1; min-width:160px;">
+              <div style="font-size:15px; font-weight:700; margin-bottom:2px;">{affiliate.name}</div>
+              <div style="font-size:13px; color:var(--text-muted);">{affiliate.desc}</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:15px; font-weight:800; margin-bottom:6px;">{affiliate.price}</div>
+              <a href="#" style="font-size:13px; font-weight:700; padding:8px 14px; border-radius:8px; background:var(--accent); color:#fff; display:inline-block;">Pogledaj ponudu</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:14px; align-items:flex-start; border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:44px;">
+          <div style="width:48px; height:48px; border-radius:50%; background:var(--accent); color:#fff; font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">{initials}</div>
+          <div>
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); margin-bottom:4px;">O autoru</div>
+            <div style="font-size:15px; font-weight:700; margin-bottom:4px;">{author.name}</div>
+            <p style="margin:0; font-size:13.5px; line-height:1.6; color:var(--text-muted);">{author.bio}</p>
+          </div>
+        </div>
+
+        {related.length > 0 && (
+          <div>
+            <h2 style="font-size:19px; font-weight:800; margin:0 0 16px;">Povezani članci</h2>
+            <div class="dby-related-grid" style="display:grid; gap:20px;">
+              {related.map((r) => (
+                <ArticleCard article={r} catName={getCategory(r.categorySlug)!.name} hue={getCategory(r.categorySlug)!.hue} />
+              ))}
+            </div>
+          </div>
+        )}
+      </article>
+    </div>
+  </div>
+</BaseLayout>

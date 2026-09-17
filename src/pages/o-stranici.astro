@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteName } from '../data/site';
+---
+
+<BaseLayout title="O stranici">
+  <div style="max-width:720px; margin:0 auto; padding:56px 20px 70px;">
+    <h1 style="font-size:clamp(26px,4.5vw,36px); font-weight:800; letter-spacing:-0.02em; margin:0 0 22px;">O stranici</h1>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">{siteName} je nastao iz jednostavne frustracije: prevelik dio sadržaja za hrvatske vozače je ili prenapadan tuning forum ili suhi tehnički priručnik koji ne odgovara na stvarna pitanja s parkinga i iz servisa.</p>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Ovdje pišemo vodiče koje bismo sami htjeli pročitati prije kupnje rabljenog auta, prije tehničkog pregleda ili prije nego se upustimo u preinaku koju kasnije treba legalizirati. Fokus je na provjerljivim, konkretnim informacijama – checklistama, koracima i troškovima – umjesto općih fraza.</p>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Tekstove pišu ljudi koji se automobilima bave iz iskustva, ne iz marketinga. Zato surađujemo pod pseudonimima, a sadržaj radije provjeravamo dvaput nego da objavimo nešto neprovjereno.</p>
+    <p style="font-size:16.5px; line-height:1.75; margin:0;">Ako smo negdje pogriješili ili nešto zastarjelo, javite nam se putem <a href="/kontakt/" style="color:var(--accent);">kontakt stranice</a> – ispravke objavljujemo javno u samom članku.</p>
+  </div>
+</BaseLayout>

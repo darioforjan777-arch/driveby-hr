@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { categories, catName, catHue, imgBg, fmtDate } from '../data/site';
+import { articles, getFeatured, getLatest, getPopular, getArticlesByCategory } from '../data/articles';
+
+const q = (Astro.url.searchParams.get('q') ?? '').trim().toLowerCase();
+const searchResults = q
+  ? articles.filter(
+      (a) => a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q)
+    )
+  : [];
+
+const featured = getFeatured();
+const latest = getLatest(6);
+const popular = getPopular(5);
+
+const homeCategoryCards = [
+  { label: 'Tehnički pregled i preinake', slug: 'tehnicki-pregled' },
+  { label: 'Održavanje', slug: 'odrzavanje' },
+  { label: 'Kupnja rabljenog auta', slug: 'kupnja-prodaja' },
+  { label: 'Prodaja auta', slug: 'kupnja-prodaja' },
+];
+
+const categorySections = categories.map((cat) => {
+  const all = getArticlesByCategory(cat.slug).slice(0, 3);
+  return { cat, items: all };
+});
+---
+
+<BaseLayout title="Praktični vodiči za vozače u Hrvatskoj">
+  <section style="padding:56px 20px 44px; border-bottom:1px solid var(--border);">
+    <div class="dby-hero-inner" style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:center; text-align:center; gap:48px;">
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:center;">
+        <h1 style="font-size:clamp(28px,5vw,44px); font-weight:800; letter-spacing:-0.02em; line-height:1.15; margin:0 0 14px;">Praktični vodiči za vozače u Hrvatskoj</h1>
+        <p style="font-size:16px; color:var(--text-muted); line-height:1.6; max-width:520px; margin:0 0 24px;">Tehnički pregled, održavanje, kupnja i prodaja auta — provjereni savjeti bez tuning žargona i praznih obećanja.</p>
+        <form action="/" method="get" class="dby-hero-search-form" style="display:flex; gap:10px; max-width:460px; width:100%; justify-content:center;">
+          <input class="dby-hero-search" name="q" value={q} type="text" placeholder="Pretraži članke, npr. 'motorno ulje'" style="flex:1; width:280px; font:inherit; font-size:14px; padding:13px 16px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); outline:none;" />
+          <button type="submit" class="dby-hero-search-btn" style="font:inherit; font-size:14px; font-weight:700; padding:13px 20px; border-radius:10px; border:none; background:var(--accent); color:#fff; cursor:pointer; flex-shrink:0;">Traži</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  {q ? (
+    <section style="max-width:1200px; margin:0 auto; padding:36px 20px;">
+      <h2 style="font-size:20px; font-weight:700; margin:0 0 18px;">Rezultati pretrage za "{q}"</h2>
+      {searchResults.length > 0 ? (
+        <div class="dby-latest-grid" style="display:grid; gap:22px;">
+          {searchResults.map((a) => (
+            <ArticleCard article={a} catName={catName(a.categorySlug)} hue={catHue(a.categorySlug)} />
+          ))}
+        </div>
+      ) : (
+        <p style="color:var(--text-muted); font-size:14px;">Nema rezultata za taj pojam.</p>
+      )}
+    </section>
+  ) : (
+    <>
+      <section style="max-width:1200px; margin:0 auto; padding:44px 20px 8px;">
+        <h2 style="font-size:20px; font-weight:700; margin:0 0 20px;">Kategorije blogova</h2>
+        <div class="dby-cats-grid" style="display:grid; gap:16px;">
+          {homeCategoryCards.map((c) => (
+            <a href={`/kategorija/${c.slug}/`} style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:28px 18px; border-radius:14px; border:1px solid var(--border); background:var(--bg-surface);" class="card-hover">
+              <span style={`display:inline-flex; width:60px; height:60px; border-radius:16px; background:${imgBg(catHue(c.slug))}; margin-bottom:16px;`}></span>
+              <div style="font-size:15px; font-weight:700; line-height:1.3;">{c.label}</div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section style="max-width:1200px; margin:0 auto; padding:44px 20px 8px;">
+        <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--accent); margin-bottom:10px;">Izdvojeno</div>
+        <a href={`/clanak/${featured.slug}/`} style="display:flex; gap:0; border:1px solid var(--border); border-radius:16px; overflow:hidden; background:var(--bg-surface);" class="dby-hero-inner card-hover">
+          <div style={`flex:1; min-width:260px; min-height:220px; background:${imgBg(catHue(featured.categorySlug))}; display:flex; align-items:flex-end; padding:16px;`}>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:4px 8px; border-radius:6px;">foto: {featured.title}</span>
+          </div>
+          <div style="flex:1.4; min-width:0; padding:28px; display:flex; flex-direction:column; justify-content:center;">
+            <div style="display:flex; gap:8px; font-size:12px; font-weight:700; color:var(--accent); margin-bottom:8px;">{catName(featured.categorySlug)}<span style="color:var(--text-muted); font-weight:600;">· {fmtDate(featured.published)}</span></div>
+            <h3 style="font-size:24px; font-weight:800; line-height:1.25; margin:0 0 10px;">{featured.title}</h3>
+            <p style="font-size:14.5px; color:var(--text-muted); line-height:1.6; margin:0 0 12px;">{featured.excerpt}</p>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <span style="font-size:13px; color:var(--text-muted);">{featured.readMin} min čitanja</span>
+              <span style="font-size:13px; font-weight:600; color:var(--accent);">Pročitaj</span>
+            </div>
+          </div>
+        </a>
+      </section>
+
+      <section style="max-width:1200px; margin:0 auto; padding:44px 20px 8px;">
+        <h2 style="font-size:20px; font-weight:700; margin:0 0 20px;">Najnoviji članci</h2>
+        <div class="dby-latest-grid" style="display:grid; gap:22px;">
+          {latest.map((a) => (
+            <ArticleCard article={a} catName={catName(a.categorySlug)} hue={catHue(a.categorySlug)} />
+          ))}
+        </div>
+      </section>
+
+      <section style="max-width:1200px; margin:0 auto; padding:44px 20px 8px;">
+        <h2 style="font-size:20px; font-weight:700; margin:0 0 20px;">Najčitanije</h2>
+        <div style="display:flex; flex-direction:column; border:1px solid var(--border); border-radius:14px; background:var(--bg-surface); overflow:hidden;">
+          {popular.map((a) => (
+            <a href={`/clanak/${a.slug}/`} style="display:flex; align-items:center; gap:14px; padding:14px 16px; border-bottom:1px solid var(--border);" class="link-muted-hover">
+              <div style={`width:56px; height:56px; border-radius:10px; background:${imgBg(catHue(a.categorySlug))}; flex-shrink:0;`}></div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:3px;">{fmtDate(a.published)}</div>
+                <div class="dby-clamp-2" style="font-size:15px; font-weight:600; line-height:1.35; margin-bottom:3px;">{a.title}</div>
+                <div style="font-size:11.5px; font-weight:700; color:var(--accent); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{catName(a.categorySlug)}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {categorySections.map((cs) => (
+        <section style="max-width:1200px; margin:0 auto; padding:44px 20px 8px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+            <h2 style="font-size:20px; font-weight:700; margin:0;">{cs.cat.name}</h2>
+            <a href={`/kategorija/${cs.cat.slug}/`} style="font-size:13.5px; font-weight:600; color:var(--accent);">Sve iz kategorije →</a>
+          </div>
+          <div class="dby-latest-grid" style="display:grid; gap:22px;">
+            {cs.items.map((a) => (
+              <ArticleCard article={a} catName={cs.cat.name} hue={cs.cat.hue} />
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <section style="max-width:1200px; margin:44px auto 60px; padding:0 20px;">
+        <div style="border-radius:16px; background:var(--bg-surface-2); border:1px solid var(--border); padding:36px 28px; display:flex; flex-wrap:wrap; gap:24px; align-items:center; justify-content:space-between;">
+          <div style="max-width:420px;">
+            <h2 style="font-size:19px; font-weight:800; margin:0 0 8px;">Novi vodič svaki tjedan u inbox</h2>
+            <p style="font-size:14px; color:var(--text-muted); margin:0; line-height:1.6;">Bez spama, bez guranja proizvoda. Samo praktični sadržaj za vozače.</p>
+          </div>
+          <div id="dby-newsletter-wrap">
+            <form id="dby-newsletter-form" style="display:flex; gap:10px; flex-wrap:wrap;">
+              <input id="dby-newsletter-email" type="email" required placeholder="vasa@email.hr" style="font:inherit; font-size:14px; padding:12px 16px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); outline:none; min-width:220px;" />
+              <button type="submit" style="font:inherit; font-size:14px; font-weight:700; padding:12px 20px; border-radius:10px; border:none; background:var(--accent); color:#fff; cursor:pointer;">Prijavi se</button>
+            </form>
+            <div id="dby-newsletter-thanks" style="display:none; font-size:14.5px; font-weight:600; color:var(--accent);">Hvala na prijavi! Provjerite inbox za potvrdu.</div>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+</BaseLayout>
+
+<script>
+  function initNewsletter() {
+    const form = document.getElementById('dby-newsletter-form');
+    const thanks = document.getElementById('dby-newsletter-thanks');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (form instanceof HTMLElement) form.style.display = 'none';
+      if (thanks) thanks.style.display = 'block';
+    });
+  }
+  initNewsletter();
+  document.addEventListener('astro:page-load', initNewsletter);
+</script>
