@@ -1,0 +1,58 @@
+{
+  "categorySlug": "tehnicki-pregled",
+  "title": "Kako legalizirati preinake na tehničkom pregledu",
+  "excerpt": "Koje preinake prolaze tehnički pregled u Hrvatskoj i kako ih pravilno prijaviti bez gubitka vremena.",
+  "readMin": 7,
+  "published": "2026-02-11",
+  "updated": "2026-06-02",
+  "popular": true,
+  "intro": "Preinaka koja nije prijavljena znači da vozilo, formalno, ne postoji u obliku u kojem ga vozite. Evo kako to riješiti bez iznenađenja na tehničkom.",
+  "warning": "Neprijavljena preinaka koja utječe na sigurnost može poništiti osiguranje u slučaju štete.",
+  "sections": [
+    {
+      "heading": "Koje preinake treba prijaviti",
+      "paragraph": "Svaka promjena koja utječe na sigurnost, emisije ili identifikacijske podatke vozila – ovjes, kotači, ispuh, snaga motora – mora se prijaviti i homologirati prije tehničkog pregleda.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Promjena visine ovjesa",
+            "Druga dimenzija kotača od tvorničke",
+            "Zamjena ispušnog sustava",
+            "Chip tuning s promjenom snage",
+            "Ugradnja LPG/CNG uređaja"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Postupak korak po korak",
+      "paragraph": "Homologacija ide preko ovlaštene stanice, a ne preko stanice za tehnički pregled.",
+      "block": {
+        "discriminant": "steps",
+        "value": {
+          "items": [
+            "Odaberi ovlaštenu homologacijsku kuću",
+            "Dostavi dokumentaciju proizvođača dijela",
+            "Obavi tehnički pregled preinake",
+            "Preuzmi rješenje i upiši promjenu u prometnu"
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Može li se preinaka legalizirati nakon što je već ugrađena?",
+      "a": "Da, dokle god dio ima homologacijsku dokumentaciju i vozilo prođe kontrolni pregled."
+    },
+    {
+      "q": "Što ako preinaku ne prijavim?",
+      "a": "Na redovnom tehničkom pregledu vozilo se ne ovjerava, a u slučaju nesreće osiguranje može odbiti isplatu."
+    }
+  ],
+  "related": [
+    "zamjena-naplatka-prijava",
+    "homologacija-lpg-koraci"
+  ]
+}

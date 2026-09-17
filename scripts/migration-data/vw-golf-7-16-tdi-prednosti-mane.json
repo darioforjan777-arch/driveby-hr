@@ -1,0 +1,45 @@
+{
+  "categorySlug": "recenzije",
+  "title": "VW Golf VII 1.6 TDI – prednosti i mane",
+  "excerpt": "Neutralan pregled najprodavanijeg kompaktnog dizelaša u regiji, bez uljepšavanja.",
+  "readMin": 6,
+  "published": "2026-01-09",
+  "updated": "2026-05-30",
+  "intro": "Golf VII 1.6 TDI ima reputaciju \"sigurne kupnje\". Iskustva vlasnika tu reputaciju uglavnom potvrđuju, uz nekoliko iznimaka.",
+  "sections": [
+    {
+      "heading": "Prednosti u svakodnevnoj vožnji",
+      "paragraph": "Vozna dinamika i kvaliteta unutrašnjosti i danas djeluju suvremeno.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Ugodan i tih na autocesti",
+            "Kvalitetni materijali u kabini za tu klasu",
+            "Dobra dostupnost rezervnih dijelova"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Poznate mane",
+      "paragraph": "DPF filter i EGR sustav osjetljivi su na kratke gradske vožnje.",
+      "block": {
+        "discriminant": "warning",
+        "value": {
+          "text": "Ako Golf VII 1.6 TDI vozite isključivo po gradu na kratkim relacijama, DPF filter se začepljuje brže i traži skuplje intervencije."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Koji je najpouzdaniji motor u ovoj generaciji Golfa?",
+      "a": "1.6 TDI 105 KS smatra se jednim od najizdržljivijih, uz uredno održavanje EGR-a i DPF-a."
+    }
+  ],
+  "related": [
+    "skoda-octavia-3-2-0-tdi-iskustva",
+    "renault-clio-4-pouzdanost"
+  ]
+}

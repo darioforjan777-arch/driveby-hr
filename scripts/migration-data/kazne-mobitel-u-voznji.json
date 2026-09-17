@@ -1,0 +1,54 @@
+{
+  "categorySlug": "novosti",
+  "title": "Nove kazne za korištenje mobitela u vožnji",
+  "excerpt": "Iznosi kazni i broj kaznenih bodova za korištenje mobitela za volanom značajno su povećani.",
+  "readMin": 4,
+  "published": "2026-03-30",
+  "intro": "Korištenje mobitela bez handsfree uređaja tijekom vožnje sada nosi veće kazne i brže gubljenje bodova.",
+  "sections": [
+    {
+      "heading": "Iznosi kazni",
+      "paragraph": "Kazna ovisi o tome je li riječ o prvom prekršaju ili ponavljanju u kratkom razdoblju.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Pregled kazni",
+          "rows": [
+            {
+              "label": "Prvi prekršaj",
+              "value": "novčana kazna + kazneni bodovi"
+            },
+            {
+              "label": "Ponovljeni prekršaj u kratkom roku",
+              "value": "viša kazna + mogući gubitak vozačke dozvole"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Što se smatra dozvoljenim korištenjem",
+      "paragraph": "Handsfree, ugrađeni sustav vozila ili držač s glasovnim upravljanjem i dalje su dopušteni.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Handsfree slušalica ili ugrađeni Bluetooth sustav",
+            "Držač telefona uz glasovno upravljanje",
+            "Telefon isključivo za navigaciju uz glasovne naredbe"
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Vrijedi li kazna i kad je auto zaustavljen u koloni?",
+      "a": "Da, dok je motor upaljen i vozilo na kolniku, korištenje mobitela u ruci i dalje se smatra prekršajem."
+    }
+  ],
+  "related": [
+    "nova-pravila-tehnickog-pregleda-2026",
+    "porez-na-vozila-izmjene"
+  ]
+}

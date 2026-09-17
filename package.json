@@ -9,6 +9,13 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@portabletext/types": "^4.0.2",
+    "@sanity/client": "^8.6.2",
+    "@sanity/image-url": "^2.1.1",
     "astro": "^4.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.3",
+    "tsx": "^4.23.13"
   }
 }

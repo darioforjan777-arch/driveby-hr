@@ -1,0 +1,44 @@
+{
+  "categorySlug": "recenzije",
+  "title": "Renault Clio IV: pouzdanost nakon 150.000 km",
+  "excerpt": "Gradski ljubimac s dobrom potrošnjom – ali servisna disciplina odlučuje hoće li ostati jeftin za održavanje.",
+  "readMin": 5,
+  "published": "2025-10-30",
+  "intro": "Clio IV je čest izbor za prvi auto. Nakon 150.000 km, iskustva vlasnika pokazuju gdje popušta prije ostalih.",
+  "sections": [
+    {
+      "heading": "Gdje se auto pokazao dobro",
+      "paragraph": "Benzinski 1.2 i dizel 1.5 dCi motori pokazali su se izdržljivima uz redovno održavanje.",
+      "block": {
+        "discriminant": "tip",
+        "value": {
+          "text": "Kod dCi motora redovna zamjena filtra goriva prema intervalu značajno smanjuje rizik kvara ubrizgivača."
+        }
+      }
+    },
+    {
+      "heading": "Slabije točke",
+      "paragraph": "Električni prozori, senzori i manji elektronski kvarovi učestaliji su nego kod konkurencije.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Provjeri rad svih el. podizača prozora",
+            "Provjeri rad klima uređaja i senzora parkiranja",
+            "Provjeri brtvljenje vjetrobranskog stakla"
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Je li 1.5 dCi motor skup za održavanje?",
+      "a": "Nije, dijelovi su pristupačni, ali zahtijeva strogo poštivanje intervala zamjene ulja i filtra goriva."
+    }
+  ],
+  "related": [
+    "vw-golf-7-16-tdi-prednosti-mane",
+    "skoda-octavia-3-2-0-tdi-iskustva"
+  ]
+}

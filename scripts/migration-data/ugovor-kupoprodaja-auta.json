@@ -1,0 +1,46 @@
+{
+  "categorySlug": "kupnja-prodaja",
+  "title": "Ugovor o kupoprodaji auta: na što paziti",
+  "excerpt": "Dobar ugovor štiti obje strane – i kupca od skrivenih mana i prodavača od kasnijih potraživanja.",
+  "readMin": 5,
+  "published": "2026-05-14",
+  "intro": "Usmeni dogovor \"sve je u redu\" ne vrijedi ništa pred zakonom. Ugovor mora sadržavati konkretne podatke i izjave o stanju vozila.",
+  "sections": [
+    {
+      "heading": "Obavezni elementi ugovora",
+      "paragraph": "Bez ovih podataka ugovor je pravno slab i teško ga je koristiti u sporu.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Puni podaci kupca i prodavača (OIB, adresa)",
+            "VIN broj, marka, model i godina vozila",
+            "Točan iznos i način plaćanja",
+            "Izjava o kilometraži i stanju vozila",
+            "Datum i mjesto potpisivanja"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Prijenos vlasništva",
+      "paragraph": "Prijenos u prometnoj dozvoli treba obaviti u zakonskom roku od dana kupnje.",
+      "block": {
+        "discriminant": "warning",
+        "value": {
+          "text": "Ako prodavač ne odjavi vozilo, sve dok ne prijaviš prijenos i on ostaje formalni vlasnik i odgovoran za eventualne prekršaje."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Treba li ugovor ovjeriti kod javnog bilježnika?",
+      "a": "Nije obavezno za osobna vozila, ali ovjera dodatno štiti obje strane kod većih iznosa."
+    }
+  ],
+  "related": [
+    "checklista-kupnja-rabljenog-njuskalo",
+    "procjena-cijene-rabljenog-vozila"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "categorySlug": "odrzavanje",
+  "title": "Kada mijenjati remen zupčastog prijenosa",
+  "excerpt": "Kašnjenje sa zamjenom razdvodnog remena spada u najskuplje pogreške koje se mogu izbjeći.",
+  "readMin": 6,
+  "published": "2025-12-10",
+  "updated": "2026-04-18",
+  "intro": "Interval zamjene remena zupčastog prijenosa nije preporuka – to je granica poslije koje rizik puknuća naglo raste.",
+  "sections": [
+    {
+      "heading": "Zamjena u koracima",
+      "paragraph": "Zajedno s remenom uvijek treba mijenjati i pripadajuće komponente.",
+      "block": {
+        "discriminant": "steps",
+        "value": {
+          "items": [
+            "Provjera kilometraže i godina od zadnje zamjene",
+            "Zamjena remena, zatezača i vodećih koloturnika",
+            "Zamjena pumpe rashladne tekućine ako je na istom remenu",
+            "Provjera pravilnog namještanja (timing) prije puštanja motora"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Zašto štedjeti na ovome nije isplativo",
+      "paragraph": "Puknuće remena kod motora s \"interferentnim\" ventilima obično znači oštećenje ventila i klipova.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Usporedba troška",
+          "rows": [
+            {
+              "label": "Redovna zamjena remena",
+              "value": "250 – 450 EUR"
+            },
+            {
+              "label": "Popravak motora nakon puknuća",
+              "value": "1.500 – 4.000 EUR"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Vozim malo, treba li mi zamjena po kilometraži ili godinama?",
+      "a": "Vrijedi koje god se prije dosegne – gumeni remen stari i bez vožnje."
+    }
+  ],
+  "related": [
+    "kako-odabrati-motorno-ulje",
+    "zvukovi-kvar-ovjes"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "categorySlug": "kupnja-prodaja",
+  "title": "Kako procijeniti realnu cijenu rabljenog vozila",
+  "excerpt": "Cijena na oglasu je početna ponuda, ne činjenica. Evo kako doći do realne tržišne vrijednosti.",
+  "readMin": 6,
+  "published": "2026-02-22",
+  "intro": "Realna cijena rabljenog auta ovisi o više od kilometraže – stanje, servisna povijest i broj vlasnika mijenjaju vrijednost jednako snažno.",
+  "sections": [
+    {
+      "heading": "Faktori koji spuštaju cijenu",
+      "paragraph": "Neki nedostaci opravdavaju popust veći nego što prodavač priznaje.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Tipičan utjecaj na cijenu",
+          "rows": [
+            {
+              "label": "Bojani paneli (osim sitnih ogrebotina)",
+              "value": "−5 do −10%"
+            },
+            {
+              "label": "Nepotpuna servisna knjižica",
+              "value": "−5 do −8%"
+            },
+            {
+              "label": "Uvezeno vozilo bez dokaza o povijesti",
+              "value": "−8 do −15%"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Kako usporediti tržište",
+      "paragraph": "Gledaj minimalno 10-15 sličnih oglasa iste godine, motorizacije i kilometraže prije nego uđeš u pregovore.",
+      "block": {
+        "discriminant": "tip",
+        "value": {
+          "text": "Zapiši prosjek cijene tri najsličnija oglasa i koristi ga kao argument u pregovorima, ne osjećaj."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Vrijedi li provjera kroz VIN broj?",
+      "a": "Da – provjera VIN-a otkriva broj prethodnih vlasnika, uvoz i, kod nekih baza, prijavljene štete."
+    }
+  ],
+  "related": [
+    "checklista-kupnja-rabljenog-njuskalo",
+    "ugovor-kupoprodaja-auta"
+  ]
+}

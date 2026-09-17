@@ -1,0 +1,54 @@
+{
+  "categorySlug": "tehnicki-pregled",
+  "title": "Zamjena naplatka: kada je prijava obavezna",
+  "excerpt": "Nisu sve alu felge isto – razmak, offset i nosivost odlučuju treba li ih prijaviti.",
+  "readMin": 5,
+  "published": "2026-01-20",
+  "intro": "Nova felga koja \"lijepo pristaje\" na oko ne znači da je legalna. Provjerite tri broja prije nego ih naručite.",
+  "sections": [
+    {
+      "heading": "Tri broja koja moraš znati",
+      "paragraph": "Dimenzija, offset (ET) i nosivost felge moraju odgovarati tvorničkim tolerancijama proizvođača vozila ili imati homologacijsku potvrdu.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Dozvoljene razlike od tvorničkih vrijednosti",
+          "rows": [
+            {
+              "label": "Promjer felge",
+              "value": "± 1 cal uz odgovarajuću gumu"
+            },
+            {
+              "label": "Offset (ET)",
+              "value": "prema TÜV izvještaju proizvođača felge"
+            },
+            {
+              "label": "Nosivost",
+              "value": "mora biti ≥ od tvorničke po osovini"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Kad je potrebna homologacija",
+      "paragraph": "Ako felge nisu na tvorničkoj listi opreme za taj model, treba TÜV izvještaj koji dokazuje sukladnost.",
+      "block": {
+        "discriminant": "tip",
+        "value": {
+          "text": "Zatraži TÜV izvještaj od prodavača felgi prije kupnje – bez njega homologacija staje na prvom koraku."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Trebam li prijaviti felge iste dimenzije kao tvorničke?",
+      "a": "Ne, ako su identične dimenzije, offseta i nosivosti kao originalna oprema."
+    }
+  ],
+  "related": [
+    "legalizacija-preinaka-tehnicki-pregled",
+    "zimske-gume-dimenzije"
+  ]
+}

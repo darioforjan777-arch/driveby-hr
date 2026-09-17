@@ -1,0 +1,55 @@
+{
+  "categorySlug": "novosti",
+  "title": "Porez na vozila: što se mijenja ove godine",
+  "excerpt": "Izmjene u obračunu poreza na vozila utječu na trošak registracije i kupnje novog auta.",
+  "readMin": 5,
+  "published": "2026-02-27",
+  "popular": true,
+  "intro": "Porezna osnovica sve više ovisi o emisiji CO2, što mijenja odnos cijene benzinskih, dizelskih i električnih vozila.",
+  "sections": [
+    {
+      "heading": "Kako se sada računa porez",
+      "paragraph": "Emisija CO2 i cijena vozila zajedno određuju konačni iznos posebnog poreza pri prvoj registraciji.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Okvirni raspon poreza po CO2 razredu",
+          "rows": [
+            {
+              "label": "do 120 g/km CO2",
+              "value": "niži razred poreza"
+            },
+            {
+              "label": "120 – 160 g/km CO2",
+              "value": "srednji razred"
+            },
+            {
+              "label": "preko 160 g/km CO2",
+              "value": "viši razred poreza"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Utjecaj na godišnju registraciju",
+      "paragraph": "Osim jednokratnog poreza, godišnja naknada za ceste i ekološka naknada također se preračunavaju.",
+      "block": {
+        "discriminant": "tip",
+        "value": {
+          "text": "Prije kupnje novog vozila provjeri službeni CO2 podatak proizvođača – razlika od nekoliko grama po km može promijeniti poreznu klasu."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Plaćaju li električna vozila poseban porez?",
+      "a": "Trenutno imaju povlašteni tretman i znatno niže poreze i naknade u odnosu na vozila s motorima s unutarnjim izgaranjem."
+    }
+  ],
+  "related": [
+    "nova-pravila-tehnickog-pregleda-2026",
+    "kazne-mobitel-u-voznji"
+  ]
+}

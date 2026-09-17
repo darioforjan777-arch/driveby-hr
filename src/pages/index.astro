@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { categories, catName, catHue, imgBg, fmtDate } from '../data/site';
 import { articles, getFeatured, getLatest, getPopular, getArticlesByCategory } from '../data/articles';
+import { urlForImage } from '../lib/sanity';
 
 const q = (Astro.url.searchParams.get('q') ?? '').trim().toLowerCase();
 const searchResults = q
@@ -69,12 +70,23 @@ const categorySections = categories.map((cat) => {
         </div>
       </section>
 
+      {!featured ? (
+        <section style="max-width:1200px; margin:0 auto; padding:44px 20px;">
+          <div style="border:1px dashed var(--border); border-radius:14px; padding:32px; text-align:center; color:var(--text-muted);">
+            Još nema objavljenih članaka. Dodaj ih u Sanity Studiju pa osvježi stranicu.
+          </div>
+        </section>
+      ) : (
       <section style="max-width:1200px; margin:0 auto; padding:44px 20px 8px;">
         <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--accent); margin-bottom:10px;">Izdvojeno</div>
         <a href={`/clanak/${featured.slug}/`} style="display:flex; gap:0; border:1px solid var(--border); border-radius:16px; overflow:hidden; background:var(--bg-surface);" class="dby-hero-inner card-hover">
-          <div style={`flex:1; min-width:260px; min-height:220px; background:${imgBg(catHue(featured.categorySlug))}; display:flex; align-items:flex-end; padding:16px;`}>
-            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:4px 8px; border-radius:6px;">foto: {featured.title}</span>
-          </div>
+          {featured.coverImage ? (
+            <img src={urlForImage(featured.coverImage).width(600).height(440).url()} alt={featured.title} style="flex:1; min-width:260px; min-height:220px; object-fit:cover;" />
+          ) : (
+            <div style={`flex:1; min-width:260px; min-height:220px; background:${imgBg(catHue(featured.categorySlug))}; display:flex; align-items:flex-end; padding:16px;`}>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:4px 8px; border-radius:6px;">foto: {featured.title}</span>
+            </div>
+          )}
           <div style="flex:1.4; min-width:0; padding:28px; display:flex; flex-direction:column; justify-content:center;">
             <div style="display:flex; gap:8px; font-size:12px; font-weight:700; color:var(--accent); margin-bottom:8px;">{catName(featured.categorySlug)}<span style="color:var(--text-muted); font-weight:600;">· {fmtDate(featured.published)}</span></div>
             <h3 style="font-size:24px; font-weight:800; line-height:1.25; margin:0 0 10px;">{featured.title}</h3>
@@ -86,6 +98,7 @@ const categorySections = categories.map((cat) => {
           </div>
         </a>
       </section>
+      )}
 
       <section style="max-width:1200px; margin:0 auto; padding:44px 20px 8px;">
         <h2 style="font-size:20px; font-weight:700; margin:0 0 20px;">Najnoviji članci</h2>
@@ -101,7 +114,11 @@ const categorySections = categories.map((cat) => {
         <div style="display:flex; flex-direction:column; border:1px solid var(--border); border-radius:14px; background:var(--bg-surface); overflow:hidden;">
           {popular.map((a) => (
             <a href={`/clanak/${a.slug}/`} style="display:flex; align-items:center; gap:14px; padding:14px 16px; border-bottom:1px solid var(--border);" class="link-muted-hover">
-              <div style={`width:56px; height:56px; border-radius:10px; background:${imgBg(catHue(a.categorySlug))}; flex-shrink:0;`}></div>
+              {a.coverImage ? (
+                <img src={urlForImage(a.coverImage).width(112).height(112).url()} alt={a.title} width="56" height="56" style="width:56px; height:56px; border-radius:10px; object-fit:cover; flex-shrink:0;" />
+              ) : (
+                <div style={`width:56px; height:56px; border-radius:10px; background:${imgBg(catHue(a.categorySlug))}; flex-shrink:0;`}></div>
+              )}
               <div style="flex:1; min-width:0;">
                 <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:3px;">{fmtDate(a.published)}</div>
                 <div class="dby-clamp-2" style="font-size:15px; font-weight:600; line-height:1.35; margin-bottom:3px;">{a.title}</div>

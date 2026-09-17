@@ -1,0 +1,59 @@
+{
+  "categorySlug": "recenzije",
+  "title": "Škoda Octavia III 2.0 TDI: iskustva vlasnika",
+  "excerpt": "Jedan od najprodavanijih rabljenih auta u Hrvatskoj – što vlasnici zapravo kažu nakon 100.000+ km.",
+  "readMin": 7,
+  "published": "2026-03-19",
+  "popular": true,
+  "intro": "Octavia III s 2.0 TDI motorom postala je gotovo zadana preporuka za obiteljski auto. Evo gdje ta reputacija drži vodu, a gdje ne.",
+  "sections": [
+    {
+      "heading": "Što vlasnici hvale",
+      "paragraph": "Prostor, potrošnja i jednostavnost servisiranja najčešće se spominju kao najveće prednosti.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Potrošnja 4,5–5,5 l/100km na duže staze",
+            "Velik prtljažnik i prostor za noge",
+            "Rasprostranjena mreža neovisnih servisa i jeftini dijelovi"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Na što obratiti pažnju kod kupnje",
+      "paragraph": "DSG mjenjač i EGR ventil najčešća su mjesta skupljih popravaka na starijim primjercima.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Najčešći kvarovi po kilometraži",
+          "rows": [
+            {
+              "label": "80.000 – 120.000 km",
+              "value": "EGR ventil, senzori tlaka"
+            },
+            {
+              "label": "120.000 – 180.000 km",
+              "value": "Mehatronika DSG mjenjača"
+            },
+            {
+              "label": "180.000+ km",
+              "value": "Turbina, ovjes"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Je li DSG mjenjač pouzdan na ovom modelu?",
+      "a": "Uz redovnu zamjenu ulja u mjenjaču na 60.000 km, DSG je uglavnom pouzdan; problemi dolaze od zapuštenog održavanja."
+    }
+  ],
+  "related": [
+    "vw-golf-7-16-tdi-prednosti-mane",
+    "checklista-kupnja-rabljenog-njuskalo"
+  ]
+}

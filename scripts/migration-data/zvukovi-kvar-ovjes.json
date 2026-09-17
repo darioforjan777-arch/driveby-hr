@@ -1,0 +1,54 @@
+{
+  "categorySlug": "odrzavanje",
+  "title": "Zvukovi koji otkrivaju kvar na ovjesu",
+  "excerpt": "Škripa, lupanje i kloparanje – svaki zvuk upire prstom na drugi dio ovjesa.",
+  "readMin": 5,
+  "published": "2026-01-28",
+  "intro": "Ovjes se rijetko pokvari bez upozorenja. Problem je što se upozorenje čuje, a ne vidi.",
+  "sections": [
+    {
+      "heading": "Prepoznavanje zvuka po dijelu",
+      "paragraph": "Lokacija i vrsta zvuka gotovo uvijek upućuju na konkretan dio ovjesa.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Zvuk → mogući uzrok",
+          "rows": [
+            {
+              "label": "Lupanje na neravninama",
+              "value": "Istrošene šipke stabilizatora"
+            },
+            {
+              "label": "Škripa u krivini",
+              "value": "Suhi ili istrošeni selen blokovi"
+            },
+            {
+              "label": "Kloparanje pri kočenju",
+              "value": "Labavi ovjesni nosač ili kočione pločice"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Kad ne čekati sljedeći servis",
+      "paragraph": "Neki zvukovi znače da je sigurnost vožnje već ugrožena.",
+      "block": {
+        "discriminant": "warning",
+        "value": {
+          "text": "Metalno struganje pri kočenju ili osjetljivo \"plutanje\" volana u krivini razlog su za odlazak u servis odmah, ne na sljedeći redovni pregled."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Je li normalno da ovjes škripi po hladnom vremenu?",
+      "a": "Blaga škripa na startu koja nestane nakon nekoliko metara često je bezopasna, ali ako se ponavlja treba je provjeriti."
+    }
+  ],
+  "related": [
+    "kako-odabrati-motorno-ulje",
+    "remen-zupcastog-prijenosa"
+  ]
+}

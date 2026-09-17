@@ -1,0 +1,51 @@
+{
+  "categorySlug": "oprema",
+  "title": "Zimske gume: kako izabrati pravu dimenziju",
+  "excerpt": "Dimenzija na naljepnici u vratima nije preporuka – to je zakonska obaveza za tehnički pregled.",
+  "readMin": 4,
+  "published": "2025-11-18",
+  "updated": "2026-01-05",
+  "intro": "Manja dimenzija zimskih guma od propisane može uzrokovati pad na tehničkom pregledu, a veća utjecati na rad ABS-a i ESP-a.",
+  "sections": [
+    {
+      "heading": "Gdje pronaći ispravnu dimenziju",
+      "paragraph": "Nalazi se na naljepnici na B-stupu vrata ili u servisnoj knjižici, ne nužno na trenutnim gumama.",
+      "block": {
+        "discriminant": "tip",
+        "value": {
+          "text": "Ako auto ima dvije dopuštene dimenzije (npr. 16\" i 17\"), zimske gume mogu biti manje dimenzije radi bolje udobnosti i cijene."
+        }
+      }
+    },
+    {
+      "heading": "Zakonski minimum dubine profila",
+      "paragraph": "Dubina profila ispod zakonskog minimuma povlači kaznu i pad tehničkog pregleda.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Zakonski minimumi",
+          "rows": [
+            {
+              "label": "Zimske gume",
+              "value": "min. 4 mm dubine profila"
+            },
+            {
+              "label": "Ljetne gume",
+              "value": "min. 1,6 mm dubine profila"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Moraju li sve četiri gume biti iste marke?",
+      "a": "Zakonski ne moraju, ali preporučuje se – razlike u prionjivosti između marki utječu na stabilnost vozila."
+    }
+  ],
+  "related": [
+    "najbolji-obd-alati-do-100-eur",
+    "kompresor-za-auto-odabir"
+  ]
+}

@@ -58,6 +58,32 @@ body {
   background: var(--bg-surface-2);
 }
 
+.dby-rich-text p {
+  margin: 0 0 14px;
+}
+.dby-rich-text h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 20px 0 10px;
+}
+.dby-rich-text h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+}
+.dby-rich-text ul,
+.dby-rich-text ol {
+  margin: 0 0 14px;
+  padding-left: 22px;
+}
+.dby-rich-text li {
+  margin-bottom: 6px;
+}
+.dby-rich-text a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 .dby-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

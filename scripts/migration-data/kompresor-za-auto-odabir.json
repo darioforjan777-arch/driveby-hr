@@ -1,0 +1,50 @@
+{
+  "categorySlug": "oprema",
+  "title": "Kompresor za auto: koji odabrati i zašto",
+  "excerpt": "Mali digitalni kompresor u prtljažniku rješava probušenu gumu bez čekanja pomoći na cesti.",
+  "readMin": 4,
+  "published": "2026-02-08",
+  "intro": "Kompresor od 30-40 EUR često izbjegne skuplji trošak – vučnu službu ili zamjenu naplatka nakon vožnje na ispuhanoj gumi.",
+  "sections": [
+    {
+      "heading": "Što provjeriti prije kupnje",
+      "paragraph": "Brzina punjenja i preciznost mjerača tlaka razlikuju kvalitetan kompresor od igračke.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Digitalni prikaz tlaka, ne analogni",
+            "Brzina punjenja do 2 bara u razumnom vremenu",
+            "LED svjetlo za rad noću",
+            "Kabel dovoljno dug za sve četiri gume"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Kako ga koristiti pravilno",
+      "paragraph": "Kompresor puni sporije nego što misliš – strpljenje čuva i njega i akumulator.",
+      "block": {
+        "discriminant": "steps",
+        "value": {
+          "items": [
+            "Pokreni motor prije spajanja kompresora",
+            "Spoji na 12V utičnicu i na gumu",
+            "Napuni do propisanog tlaka iz priručnika",
+            "Isključi motor tek nakon isključivanja kompresora"
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Može li kompresor isprazniti akumulator?",
+      "a": "Kratko korištenje uz upaljen motor ne predstavlja rizik; dugo punjenje s isključenim motorom može."
+    }
+  ],
+  "related": [
+    "zimske-gume-dimenzije",
+    "najbolji-obd-alati-do-100-eur"
+  ]
+}

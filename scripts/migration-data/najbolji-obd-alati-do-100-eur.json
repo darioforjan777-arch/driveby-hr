@@ -1,0 +1,50 @@
+{
+  "categorySlug": "oprema",
+  "title": "Najbolji OBD dijagnostički alati do 100 EUR",
+  "excerpt": "Kućni OBD čitač ne zamjenjuje servis, ali može spriječiti nepotrebnu paniku i nepotreban odlazak na dijagnostiku.",
+  "readMin": 5,
+  "published": "2026-04-27",
+  "intro": "Kada se upali lampica motora, jeftin OBD čitač u autu prvo pokaže je li riječ o sitnici ili ozbiljnom kvaru.",
+  "sections": [
+    {
+      "heading": "Na što obratiti pažnju kod odabira",
+      "paragraph": "Podrška za sve sustave (motor, ABS, airbag), ne samo motor, glavna je razlika između jeftinih i kvalitetnih uređaja.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Podrška za sve sustave vozila, ne samo motor",
+            "Redovita ažuriranja baze grešaka",
+            "Kompatibilnost s aplikacijom na hrvatskom ili engleskom jeziku",
+            "Bluetooth verzija za lakše korištenje s telefonom"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Kako pročitati grešku bez panike",
+      "paragraph": "Kod greške je samo početna točka – uvijek provjeri i opis, ne samo šifru.",
+      "block": {
+        "discriminant": "steps",
+        "value": {
+          "items": [
+            "Spoji čitač na OBD utičnicu (obično ispod volana)",
+            "Uključi paljenje bez pokretanja motora",
+            "Pročitaj kod greške i njen opis",
+            "Usporedi s priručnikom modela prije odlaska u servis"
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Može li OBD čitač oštetiti auto?",
+      "a": "Ne, čitanje kodova je pasivna operacija; problem nastaje samo ako se koristi za brisanje grešaka bez razumijevanja uzroka."
+    }
+  ],
+  "related": [
+    "zimske-gume-dimenzije",
+    "kompresor-za-auto-odabir"
+  ]
+}

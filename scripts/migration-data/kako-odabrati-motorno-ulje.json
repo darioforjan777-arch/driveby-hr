@@ -1,0 +1,50 @@
+{
+  "categorySlug": "odrzavanje",
+  "title": "Kako odabrati pravo motorno ulje",
+  "excerpt": "Viskoznost, norma i interval zamjene – tri podatka koja rješavaju 90% pitanja o ulju.",
+  "readMin": 6,
+  "published": "2026-03-02",
+  "popular": true,
+  "intro": "Pogrešno ulje ne uništava motor odmah, ali ubrzava trošenje. Evo kako čitati specifikaciju u servisnoj knjižici.",
+  "sections": [
+    {
+      "heading": "Što znače brojevi i norme",
+      "paragraph": "Oznaka poput 5W-30 govori o viskoznosti na hladno i na radnoj temperaturi, dok norme (ACEA, API) govore je li ulje kompatibilno s tvojim motorom.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Provjeri preporučenu viskoznost u servisnoj knjižici",
+            "Provjeri ACEA/API normu, ne samo viskoznost",
+            "Za dizel s DPF filterom koristi Low SAPS ulje",
+            "Ne mijenjaj interval zamjene \"na oko\""
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Kada se ulje mijenja ranije",
+      "paragraph": "Kratke vožnje po gradu i stalno gušenje u gužvi skraćuju stvarni vijek ulja u odnosu na tvornički interval.",
+      "block": {
+        "discriminant": "tip",
+        "value": {
+          "text": "Ako većinom vozite kratke relacije po gradu, mijenjajte ulje na donjoj granici tvorničkog intervala, ne na gornjoj."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Mogu li miješati sintetičko i polusintetičko ulje?",
+      "a": "U nuždi da, ali dugoročno drži se jedne vrste kako bi svojstva ulja ostala dosljedna."
+    },
+    {
+      "q": "Utječe li krivo ulje na garanciju?",
+      "a": "Da – servisna knjižica bilježi vrstu ulja, a korištenje neodgovarajuće specifikacije može biti razlog odbijanja reklamacije."
+    }
+  ],
+  "related": [
+    "zvukovi-kvar-ovjes",
+    "remen-zupcastog-prijenosa"
+  ]
+}

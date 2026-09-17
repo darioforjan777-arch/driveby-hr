@@ -1,0 +1,55 @@
+{
+  "categorySlug": "tehnicki-pregled",
+  "title": "Homologacija LPG uređaja: koraci i troškovi",
+  "excerpt": "Ugradnja plina jeftinija je od punjenja benzina, ali papirologija ima svoju cijenu i rokove.",
+  "readMin": 6,
+  "published": "2025-11-04",
+  "updated": "2026-03-15",
+  "intro": "LPG uređaj mora ugraditi ovlašteni serviser, a homologacija je obavezan korak prije prvog tehničkog pregleda nakon ugradnje.",
+  "sections": [
+    {
+      "heading": "Troškovi ugradnje i homologacije",
+      "paragraph": "Cijena ovisi o veličini spremnika i broju cilindara motora.",
+      "block": {
+        "discriminant": "table",
+        "value": {
+          "caption": "Prosječni troškovi (2026.)",
+          "rows": [
+            {
+              "label": "Ugradnja LPG kompleta",
+              "value": "650 – 950 EUR"
+            },
+            {
+              "label": "Homologacijski pregled",
+              "value": "80 – 120 EUR"
+            },
+            {
+              "label": "Upis u prometnu dozvolu",
+              "value": "25 EUR"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Redovna kontrola spremnika",
+      "paragraph": "Plinski spremnik ima rok valjanosti koji se kontrolira periodično, neovisno o tehničkom pregledu vozila.",
+      "block": {
+        "discriminant": "warning",
+        "value": {
+          "text": "Istekla kontrola plinskog spremnika povlači zabranu daljnje vožnje na plin dok se ne obavi ponovna ispitna kontrola."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Utječe li LPG na garanciju vozila?",
+      "a": "Ovlaštena ugradnja sama po sebi ne poništava garanciju, ali kvar izravno uzrokovan ugradnjom može biti izuzet."
+    }
+  ],
+  "related": [
+    "legalizacija-preinaka-tehnicki-pregled",
+    "kako-odabrati-motorno-ulje"
+  ]
+}

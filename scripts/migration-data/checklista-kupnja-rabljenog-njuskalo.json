@@ -1,0 +1,59 @@
+{
+  "categorySlug": "kupnja-prodaja",
+  "title": "Checklista za kupnju rabljenog auta s Njuškala",
+  "excerpt": "Dvadeset minuta provjere na licu mjesta može spriječiti mjesece problema i tisuće eura popravaka.",
+  "readMin": 8,
+  "published": "2026-04-05",
+  "updated": "2026-08-20",
+  "popular": true,
+  "featured": true,
+  "intro": "Oglas s lijepim slikama ne govori ništa o stvarnom stanju auta. Ova checklista prolazi kroz sve što se može provjeriti bez dizanja vozila na dizalicu.",
+  "warning": "Nikad ne plaćaj kaparu ili cijeli iznos prije nego provjeriš da prodavač na prometnoj dozvoli odgovara osobi s kojom razgovaraš.",
+  "sections": [
+    {
+      "heading": "Provjera na terenu",
+      "paragraph": "Prije test vožnje pogledaj karoseriju, gume i tragove curenja tekućina.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Ujednačen razmak spojeva lima (nema udara)",
+            "Boja i debljina laka podudarna na svim panelima",
+            "Nema tragova ulja ili rashladne tekućine ispod auta",
+            "Gume ravnomjerno istrošene",
+            "Datumi na servisnoj knjižici odgovaraju kilometraži"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Test vožnja",
+      "paragraph": "Vozi minimalno 20 minuta, po gradu i autocesti, s hladnim i toplim motorom.",
+      "block": {
+        "discriminant": "steps",
+        "value": {
+          "items": [
+            "Pokreni motor hladan i slušaj prve minute",
+            "Provjeri mjenjač u svim brzinama",
+            "Provjeri kočenje ravnom crtom i pri jačem kočenju",
+            "Nakon 15-ak minuta provjeri temperaturu i miris iz kabine"
+          ]
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Isplati li se platiti neovisnu inspekciju vozila?",
+      "a": "Za automobile starije od 8 godina ili iznad 15.000 EUR skoro uvijek da – cijena inspekcije je mala u odnosu na rizik."
+    },
+    {
+      "q": "Je li normalno da prodavač ne dozvoli dulju test vožnju?",
+      "a": "Nije – ozbiljan prodavač neće imati problem s razumnom, dogovorenom test vožnjom."
+    }
+  ],
+  "related": [
+    "procjena-cijene-rabljenog-vozila",
+    "ugovor-kupoprodaja-auta"
+  ]
+}

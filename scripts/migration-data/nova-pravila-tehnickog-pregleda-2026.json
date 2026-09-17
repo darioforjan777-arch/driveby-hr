@@ -1,0 +1,45 @@
+{
+  "categorySlug": "novosti",
+  "title": "Nova pravila tehničkog pregleda od 2026. godine",
+  "excerpt": "Nekoliko promjena u postupku tehničkog pregleda utječe na to koliko često i što se točno provjerava.",
+  "readMin": 5,
+  "published": "2026-01-15",
+  "updated": "2026-07-01",
+  "intro": "Izmjene pravilnika o tehničkim pregledima donose strože provjere emisijskog sustava i noviju opremu na stanicama.",
+  "sections": [
+    {
+      "heading": "Što se konkretno mijenja",
+      "paragraph": "Provjera se sada oslanja i na očitanje OBD sustava vozila, ne samo na vizualni pregled.",
+      "block": {
+        "discriminant": "checklist",
+        "value": {
+          "items": [
+            "Obavezno OBD očitanje kod vozila proizvedenih nakon 2010.",
+            "Stroža provjera brtvljenja DPF/FAP filtera",
+            "Detaljnija provjera sustava za pomoć u vožnji (ADAS)"
+          ]
+        }
+      }
+    },
+    {
+      "heading": "Što to znači za vozača",
+      "paragraph": "Vozila s neriješenim greškama na senzorima mogu pasti tehnički pregled i kada \"vizualno\" sve izgleda uredno.",
+      "block": {
+        "discriminant": "warning",
+        "value": {
+          "text": "Upaljena lampica motora sama po sebi može biti razlog za pad tehničkog pregleda, bez obzira na težinu stvarnog kvara."
+        }
+      }
+    }
+  ],
+  "faq": [
+    {
+      "q": "Vrijede li nova pravila za sva vozila odmah?",
+      "a": "Primjenjuju se postupno prema godini proizvodnje vozila, prema rasporedu koji objavljuje nadležno tijelo."
+    }
+  ],
+  "related": [
+    "porez-na-vozila-izmjene",
+    "kazne-mobitel-u-voznji"
+  ]
+}
