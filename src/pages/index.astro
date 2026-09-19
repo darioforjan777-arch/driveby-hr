@@ -5,13 +5,6 @@ import { categories, catName, catHue, imgBg, fmtDate } from '../data/site';
 import { articles, getFeatured, getLatest, getPopular, getArticlesByCategory } from '../data/articles';
 import { urlForImage } from '../lib/sanity';
 
-const q = (Astro.url.searchParams.get('q') ?? '').trim().toLowerCase();
-const searchResults = q
-  ? articles.filter(
-      (a) => a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q)
-    )
-  : [];
-
 const featured = getFeatured();
 const latest = getLatest(6);
 const popular = getPopular(5);
@@ -27,6 +20,16 @@ const categorySections = categories.map((cat) => {
   const all = getArticlesByCategory(cat.slug).slice(0, 3);
   return { cat, items: all };
 });
+
+const searchData = articles.map((a) => ({
+  title: a.title,
+  excerpt: a.excerpt,
+  slug: a.slug,
+  cat: catName(a.categorySlug),
+  hue: catHue(a.categorySlug),
+  cover: a.coverImage ? urlForImage(a.coverImage).width(400).height(240).url() : null,
+  readMin: a.readMin,
+}));
 ---
 
 <BaseLayout title="Praktični vodiči za vozače u Hrvatskoj" breadcrumbs={[{ name: 'Naslovnica', url: '/' }]}>
@@ -35,29 +38,23 @@ const categorySections = categories.map((cat) => {
       <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:center;">
         <h1 style="font-size:clamp(28px,5vw,44px); font-weight:800; letter-spacing:-0.02em; line-height:1.15; margin:0 0 14px;">Praktični vodiči za vozače u Hrvatskoj</h1>
         <p style="font-size:16px; color:var(--text-muted); line-height:1.6; max-width:520px; margin:0 0 24px;">Tehnički pregled, održavanje, kupnja i prodaja auta — provjereni savjeti bez tuning žargona i praznih obećanja.</p>
-        <form action="/" method="get" class="dby-hero-search-form" style="display:flex; gap:10px; max-width:460px; width:100%; justify-content:center;">
-          <input class="dby-hero-search" name="q" value={q} type="text" placeholder="Pretraži članke, npr. 'motorno ulje'" style="flex:1; width:280px; font:inherit; font-size:14px; padding:13px 16px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); outline:none;" />
+        <form id="dby-hero-search-form" class="dby-hero-search-form" style="display:flex; gap:10px; max-width:460px; width:100%; justify-content:center;">
+          <input id="dby-search-input" class="dby-hero-search" name="q" type="text" autocomplete="off" placeholder="Pretraži članke, npr. 'motorno ulje'" style="flex:1; width:280px; font:inherit; font-size:14px; padding:13px 16px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); outline:none;" />
           <button type="submit" class="dby-hero-search-btn" style="font:inherit; font-size:14px; font-weight:700; padding:13px 20px; border-radius:10px; border:none; background:var(--accent); color:#fff; cursor:pointer; flex-shrink:0;">Traži</button>
         </form>
       </div>
     </div>
   </section>
 
-  {q ? (
-    <section style="max-width:1200px; margin:0 auto; padding:36px 20px;">
-      <h2 style="font-size:20px; font-weight:700; margin:0 0 18px;">Rezultati pretrage za "{q}"</h2>
-      {searchResults.length > 0 ? (
-        <div class="dby-latest-grid" style="display:grid; gap:22px;">
-          {searchResults.map((a) => (
-            <ArticleCard article={a} catName={catName(a.categorySlug)} hue={catHue(a.categorySlug)} />
-          ))}
-        </div>
-      ) : (
-        <p style="color:var(--text-muted); font-size:14px;">Nema rezultata za taj pojam.</p>
-      )}
-    </section>
-  ) : (
-    <>
+  <script type="application/json" id="dby-search-data" set:html={JSON.stringify(searchData)} />
+
+  <section id="dby-search-results" style="display:none; max-width:1200px; margin:0 auto; padding:36px 20px;">
+    <h2 id="dby-search-heading" style="font-size:20px; font-weight:700; margin:0 0 18px;">Rezultati pretrage</h2>
+    <div id="dby-search-grid" class="dby-latest-grid" style="display:grid; gap:22px;"></div>
+    <p id="dby-search-empty" style="display:none; color:var(--text-muted); font-size:14px;">Nema rezultata za taj pojam.</p>
+  </section>
+
+  <div id="dby-home-sections">
       <section style="max-width:1200px; margin:0 auto; padding:44px 20px 8px;">
         <h2 style="font-size:20px; font-weight:700; margin:0 0 20px;">Kategorije blogova</h2>
         <div class="dby-cats-grid" style="display:grid; gap:16px;">
@@ -158,8 +155,7 @@ const categorySections = categories.map((cat) => {
           </div>
         </div>
       </section>
-    </>
-  )}
+  </div>
 </BaseLayout>
 
 <script>
@@ -174,4 +170,88 @@ const categorySections = categories.map((cat) => {
   }
   initNewsletter();
   document.addEventListener('astro:page-load', initNewsletter);
+</script>
+
+<script>
+  function escapeHtml(s: string): string {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function imgBgJs(hue: number): string {
+    return `repeating-linear-gradient(115deg, oklch(0.93 0.045 ${hue}) 0px, oklch(0.93 0.045 ${hue}) 14px, oklch(0.88 0.06 ${hue}) 14px, oklch(0.88 0.06 ${hue}) 16px)`;
+  }
+
+  interface SearchArticle {
+    title: string;
+    excerpt: string;
+    slug: string;
+    cat: string;
+    hue: number;
+    cover: string | null;
+    readMin: number;
+  }
+
+  function cardHtml(a: SearchArticle): string {
+    const img = a.cover
+      ? `<img src="${a.cover}" alt="${escapeHtml(a.title)}" width="400" height="150" style="height:150px; width:100%; object-fit:cover; display:block;" />`
+      : `<div style="height:150px; background:${imgBgJs(a.hue)}; display:flex; align-items:flex-end; padding:10px; min-width:0;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:3px 7px; border-radius:5px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;">foto: ${escapeHtml(a.title)}</span></div>`;
+    return `<a href="/clanak/${a.slug}/" style="display:flex; flex-direction:column; border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--bg-surface); height:100%; text-decoration:none; color:inherit;" class="card-hover">
+      ${img}
+      <div style="padding:16px 16px 18px; display:flex; flex-direction:column; flex:1; min-width:0;">
+        <div style="font-size:11.5px; font-weight:700; color:var(--accent); margin-bottom:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(a.cat)}</div>
+        <div style="font-size:16px; font-weight:700; line-height:1.35; margin-bottom:8px;">${escapeHtml(a.title)}</div>
+        <p style="font-size:13.5px; color:var(--text-muted); line-height:1.55; margin:0 0 12px; flex:1;">${escapeHtml(a.excerpt)}</p>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+          <span style="font-size:12.5px; color:var(--text-muted); white-space:nowrap;">${a.readMin} min čitanja</span>
+          <span style="font-size:12.5px; font-weight:600; color:var(--accent); white-space:nowrap; flex-shrink:0;">Pročitaj</span>
+        </div>
+      </div>
+    </a>`;
+  }
+
+  function initSearch() {
+    const input = document.getElementById('dby-search-input') as HTMLInputElement | null;
+    const form = document.getElementById('dby-hero-search-form');
+    const resultsSection = document.getElementById('dby-search-results');
+    const resultsGrid = document.getElementById('dby-search-grid');
+    const resultsHeading = document.getElementById('dby-search-heading');
+    const resultsEmpty = document.getElementById('dby-search-empty');
+    const homeSections = document.getElementById('dby-home-sections');
+    const dataEl = document.getElementById('dby-search-data');
+    if (!input || !form || !resultsSection || !resultsGrid || !homeSections || !dataEl) return;
+
+    let data: SearchArticle[] = [];
+    try {
+      data = JSON.parse(dataEl.textContent || '[]');
+    } catch (e) {
+      data = [];
+    }
+
+    function runSearch() {
+      const q = (input!.value || '').trim().toLowerCase();
+      if (q.length < 3) {
+        resultsSection!.style.display = 'none';
+        homeSections!.style.display = '';
+        return;
+      }
+      const matches = data.filter(
+        (a) => a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q)
+      );
+      homeSections!.style.display = 'none';
+      resultsSection!.style.display = 'block';
+      if (resultsHeading) resultsHeading.textContent = `Rezultati pretrage za "${input!.value.trim()}"`;
+      resultsGrid!.innerHTML = matches.map(cardHtml).join('');
+      if (resultsEmpty) resultsEmpty.style.display = matches.length ? 'none' : 'block';
+    }
+
+    input.addEventListener('input', runSearch);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      runSearch();
+    });
+    runSearch();
+  }
+
+  initSearch();
+  document.addEventListener('astro:page-load', initSearch);
 </script>
