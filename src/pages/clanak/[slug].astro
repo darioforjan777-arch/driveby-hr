@@ -226,7 +226,8 @@ const faqSchema =
         id="dby-lightbox-img"
         src=""
         alt=""
-        style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; cursor:zoom-in; touch-action:none; user-select:none;"
+        draggable="false"
+        style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; cursor:zoom-in; touch-action:none; user-select:none; -webkit-user-drag:none; -webkit-touch-callout:none;"
       />
     </div>
     <div
@@ -330,6 +331,7 @@ const faqSchema =
 
     lightboxImg.addEventListener('pointerdown', (e) => {
       e.stopPropagation();
+      e.preventDefault();
       dragging = true;
       moved = false;
       startX = e.clientX;
