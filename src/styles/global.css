@@ -238,6 +238,9 @@ body {
   }
 }
 
+.dby-toc-mobile {
+  display: none;
+}
 .dby-toc-mobile summary {
   position: relative;
 }
