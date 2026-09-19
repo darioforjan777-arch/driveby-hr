@@ -102,6 +102,35 @@ body {
   color: var(--accent);
   text-decoration: underline;
 }
+.dby-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.dby-rich-text table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.dby-rich-text th,
+.dby-rich-text td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: normal;
+}
+.dby-rich-text thead th {
+  background: var(--bg-surface-2);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+.dby-rich-text tbody tr:last-child td {
+  border-bottom: none;
+}
 
 .dby-clamp-2 {
   display: -webkit-box;

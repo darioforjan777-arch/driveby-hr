@@ -25,6 +25,13 @@ interface PTImage {
   [key: string]: unknown;
 }
 
+interface PTTable {
+  _type: 'table';
+  headerCol1?: string;
+  headerCol2?: string;
+  rows?: { label?: string; value?: string }[];
+}
+
 export function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
@@ -64,7 +71,20 @@ function renderImage(image: PTImage): string {
   return `<img src="${url}" alt="${alt}" loading="lazy" class="dby-lightbox-img" style="width:100%; height:auto; border-radius:12px; margin:6px 0 20px; cursor:zoom-in;" />`;
 }
 
-export function renderArticleBody(blocks: (PTBlock | PTImage)[] | undefined | null): { html: string; toc: TocEntry[] } {
+function renderTable(table: PTTable): string {
+  const rows = table.rows ?? [];
+  if (rows.length === 0) return '';
+  const h1 = escapeHtml(table.headerCol1 ?? '');
+  const h2 = escapeHtml(table.headerCol2 ?? '');
+  const body = rows
+    .map(
+      (r) => `<tr><td>${escapeHtml(r.label ?? '')}</td><td>${escapeHtml(r.value ?? '')}</td></tr>`
+    )
+    .join('');
+  return `<div class="dby-table-wrap"><table><thead><tr><th>${h1}</th><th>${h2}</th></tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
+export function renderArticleBody(blocks: (PTBlock | PTImage | PTTable)[] | undefined | null): { html: string; toc: TocEntry[] } {
   if (!blocks || blocks.length === 0) return { html: '', toc: [] };
   let html = '';
   let listOpen: 'bullet' | 'number' | null = null;
@@ -81,6 +101,11 @@ export function renderArticleBody(blocks: (PTBlock | PTImage)[] | undefined | nu
     if (rawBlock._type === 'image') {
       closeList();
       html += renderImage(rawBlock as PTImage);
+      continue;
+    }
+    if (rawBlock._type === 'table') {
+      closeList();
+      html += renderTable(rawBlock as PTTable);
       continue;
     }
     const block = rawBlock as PTBlock;
