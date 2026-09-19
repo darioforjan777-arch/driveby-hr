@@ -233,6 +233,28 @@ body {
   .dby-toc {
     display: none !important;
   }
+  .dby-toc-mobile {
+    display: block !important;
+  }
+}
+
+.dby-toc-mobile summary {
+  position: relative;
+}
+.dby-toc-mobile summary::-webkit-details-marker {
+  display: none;
+}
+.dby-toc-mobile summary::after {
+  content: '+';
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+.dby-toc-mobile[open] summary::after {
+  content: '−';
 }
 @media (max-width: 600px) {
   .dby-related-grid {

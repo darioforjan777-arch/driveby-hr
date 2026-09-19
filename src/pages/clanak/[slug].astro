@@ -24,7 +24,6 @@ const toc = bodyToc
   .concat(article.faq?.length ? [{ label: 'Često postavljana pitanja', href: '#faq' }] : []);
 
 const related = article.related.map((s) => getArticleBySlug(s)).filter(Boolean) as typeof articles;
-const shortTitle = article.title.length > 40 ? article.title.slice(0, 40) + '…' : article.title;
 
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
 const articleUrl = `${siteUrl}/clanak/${article.slug}/`;
@@ -96,9 +95,24 @@ const faqSchema =
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   )}
   <div style="max-width:1200px; margin:0 auto; padding:32px 20px 70px;">
-    <div style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
-      <a href="/" style="color:var(--text-muted);" class="link-hover">Naslovnica</a> / <a href={`/kategorija/${cat.slug}/`} style="color:var(--text-muted);" class="link-hover">{cat.name}</a> / <span style="color:var(--text);">{shortTitle}</span>
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:18px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+      <a href="/" aria-label="Naslovnica" title="Naslovnica" style="color:var(--text-muted); display:inline-flex; align-items:center;" class="link-hover">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5Z"></path></svg>
+      </a>
+      <span>/</span>
+      <a href={`/kategorija/${cat.slug}/`} style="color:var(--text-muted);" class="link-hover">{cat.name}</a>
     </div>
+
+    {toc.length > 0 && (
+      <details class="dby-toc-mobile" style="display:none; margin-bottom:22px; border:1px solid var(--border); border-radius:12px; background:var(--bg-surface);">
+        <summary style="font-size:13.5px; font-weight:700; padding:14px 16px; cursor:pointer; list-style:none;">Sadržaj</summary>
+        <div style="display:flex; flex-direction:column; gap:10px; padding:0 16px 16px;">
+          {toc.map((t) => (
+            <a href={t.href} style="font-size:13.5px; color:var(--text-muted); line-height:1.4;" class="link-hover">{t.label}</a>
+          ))}
+        </div>
+      </details>
+    )}
 
     <div class="dby-article-layout" style="display:grid; gap:44px;">
       <aside class="dby-toc" style="position:sticky; top:80px; align-self:start;">
