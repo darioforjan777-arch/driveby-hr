@@ -63,6 +63,22 @@ const blogPostingSchema = {
   timeRequired: `PT${article.readMin}M`,
   inLanguage: 'hr',
 };
+
+const faqSchema =
+  article.faq && article.faq.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: article.faq.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: f.a,
+          },
+        })),
+      }
+    : null;
 ---
 
 <BaseLayout
@@ -76,6 +92,9 @@ const blogPostingSchema = {
   ]}
 >
   <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
+  {faqSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  )}
   <div style="max-width:1200px; margin:0 auto; padding:32px 20px 70px;">
     <div style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
       <a href="/" style="color:var(--text-muted);" class="link-hover">Naslovnica</a> / <a href={`/kategorija/${cat.slug}/`} style="color:var(--text-muted);" class="link-hover">{cat.name}</a> / <span style="color:var(--text);">{shortTitle}</span>
