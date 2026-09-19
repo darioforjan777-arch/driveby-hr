@@ -61,7 +61,7 @@ function renderImage(image: PTImage): string {
   if (!image?.asset) return '';
   const alt = escapeHtml(image.alt ?? '');
   const url = urlForImage(image).width(1200).url();
-  return `<img src="${url}" alt="${alt}" loading="lazy" style="width:100%; height:auto; border-radius:12px; margin:6px 0 20px;" />`;
+  return `<img src="${url}" alt="${alt}" loading="lazy" class="dby-lightbox-img" style="width:100%; height:auto; border-radius:12px; margin:6px 0 20px; cursor:zoom-in;" />`;
 }
 
 export function renderArticleBody(blocks: (PTBlock | PTImage)[] | undefined | null): { html: string; toc: TocEntry[] } {

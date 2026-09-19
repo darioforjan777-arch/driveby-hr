@@ -145,7 +145,7 @@ const faqSchema =
         </div>
 
         {coverUrl && (
-          <img src={coverUrl} alt={article.coverImage?.alt || article.title} width="1200" height="720" style="width:100%; height:auto; aspect-ratio:5/3; object-fit:cover; border-radius:14px; margin-bottom:28px;" />
+          <img src={coverUrl} alt={article.coverImage?.alt || article.title} width="1200" height="720" class="dby-lightbox-img" style="width:100%; height:auto; aspect-ratio:5/3; object-fit:cover; border-radius:14px; margin-bottom:28px; cursor:zoom-in;" />
         )}
 
         <div class="dby-rich-text" style="font-size:15.5px; line-height:1.7; margin:0 0 30px; color:var(--text);" set:html={bodyHtmlWithToc} />
@@ -185,4 +185,59 @@ const faqSchema =
       </article>
     </div>
   </div>
+
+  <div
+    id="dby-lightbox"
+    style="display:none; position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; padding:24px;"
+  >
+    <button
+      type="button"
+      id="dby-lightbox-close"
+      aria-label="Zatvori"
+      style="position:absolute; top:16px; right:16px; width:40px; height:40px; border-radius:50%; border:none; background:rgba(255,255,255,0.12); color:#fff; font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;"
+    >
+      ✕
+    </button>
+    <img id="dby-lightbox-img" src="" alt="" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px;" />
+  </div>
 </BaseLayout>
+
+<script>
+  function initLightbox() {
+    const lightbox = document.getElementById('dby-lightbox');
+    const lightboxImg = document.getElementById('dby-lightbox-img') as HTMLImageElement | null;
+    const closeBtn = document.getElementById('dby-lightbox-close');
+    if (!lightbox || !lightboxImg || !closeBtn) return;
+
+    function open(src: string, alt: string) {
+      lightboxImg!.src = src;
+      lightboxImg!.alt = alt;
+      lightbox!.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lightbox!.style.display = 'none';
+      lightboxImg!.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const img = target.closest('.dby-lightbox-img') as HTMLImageElement | null;
+      if (img) {
+        open(img.src, img.alt || '');
+      }
+    });
+
+    closeBtn.addEventListener('click', close);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  }
+  initLightbox();
+  document.addEventListener('astro:page-load', initLightbox);
+</script>
