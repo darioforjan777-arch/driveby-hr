@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import { getCategory, authors, affiliates, imgBg, fmtDate } from '../../data/site';
+import { getCategory, fmtDate } from '../../data/site';
 import { articles, getArticleBySlug } from '../../data/articles';
 import { renderArticleBody } from '../../lib/portableText';
 import { urlForImage } from '../../lib/sanity';
@@ -13,9 +13,6 @@ export function getStaticPaths() {
 const { slug } = Astro.params;
 const article = getArticleBySlug(slug as string)!;
 const cat = getCategory(article.categorySlug)!;
-const author = authors[article.categorySlug];
-const affiliate = affiliates[article.categorySlug];
-const initials = author.name.split(' ').map((w) => w[0]).join('');
 
 const seoTitle = article.seo?.metaTitle || article.title;
 const seoDescription = article.seo?.metaDescription || article.excerpt;
@@ -75,27 +72,11 @@ const shortTitle = article.title.length > 40 ? article.title.slice(0, 40) + '…
         </div>
         )}
 
-        <div style="border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:32px; background:var(--bg-surface-2);">
-          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:10px;">Oglas · preporučeni proizvod</div>
-          <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
-            <div style={`width:64px; height:64px; border-radius:10px; background:oklch(0.85 0.06 ${affiliate.hue}); flex-shrink:0;`}></div>
-            <div style="flex:1; min-width:160px;">
-              <div style="font-size:15px; font-weight:700; margin-bottom:2px;">{affiliate.name}</div>
-              <div style="font-size:13px; color:var(--text-muted);">{affiliate.desc}</div>
-            </div>
-            <div style="text-align:right;">
-              <div style="font-size:15px; font-weight:800; margin-bottom:6px;">{affiliate.price}</div>
-              <a href="#" style="font-size:13px; font-weight:700; padding:8px 14px; border-radius:8px; background:var(--accent); color:#fff; display:inline-block;">Pogledaj ponudu</a>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex; gap:14px; align-items:flex-start; border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:44px;">
-          <div style="width:48px; height:48px; border-radius:50%; background:var(--accent); color:#fff; font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">{initials}</div>
+        <div style="display:flex; gap:14px; align-items:center; border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:44px;">
+          <div style="width:48px; height:48px; border-radius:50%; background:var(--accent); color:#fff; font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">DF</div>
           <div>
             <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); margin-bottom:4px;">O autoru</div>
-            <div style="font-size:15px; font-weight:700; margin-bottom:4px;">{author.name}</div>
-            <p style="margin:0; font-size:13.5px; line-height:1.6; color:var(--text-muted);">{author.bio}</p>
+            <div style="font-size:15px; font-weight:700;">Dario Forjan</div>
           </div>
         </div>
 

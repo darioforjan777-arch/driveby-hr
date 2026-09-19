@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteName } from '../data/site';
+---
+<BaseLayout title="Pravila privatnosti">
+  <div style="max-width:720px; margin:0 auto; padding:56px 20px 70px;">
+    <h1 style="font-size:clamp(26px,4.5vw,36px); font-weight:800; letter-spacing:-0.02em; margin:0 0 22px;">Pravila privatnosti</h1>
+
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">{siteName} poštuje vašu privatnost. Ova stranica objašnjava koje podatke prikupljamo kada posjetite naš web te kako se oni koriste.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Koje podatke prikupljamo</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">{siteName} ne zahtijeva registraciju, prijavu niti unos osobnih podataka za čitanje sadržaja. Ne prikupljamo podatke o plaćanju jer stranica ne nudi kupnju ni prodaju proizvoda ili usluga. Ako nam se obratite putem <a href="/kontakt/" style="color:var(--accent);">kontakt stranice</a>, prikupljamo samo podatke koje nam sami pošaljete (npr. e-mail adresu i sadržaj poruke), a koristimo ih isključivo za odgovor na vaš upit.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Kolačići i analitika</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Stranica koristi kolačiće u osnovne i analitičke svrhe kako bismo razumjeli koji su sadržaji korisni čitateljima. Detalje o vrstama kolačića i vašem izboru pronaći ćete na stranici <a href="/kolacici/" style="color:var(--accent);">Kolačići</a>.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Vaša prava</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Budući da posjetitelji stranice djeluju u skladu s Općom uredbom o zaštiti podataka (GDPR), u svakom trenutku imate pravo zatražiti uvid, ispravak ili brisanje podataka koje ste nam dobrovoljno dostavili (npr. putem kontakt obrasca), kao i povući privolu za korištenje neobaveznih (analitičkih) kolačića.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Dijeljenje podataka</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Ne prodajemo niti dijelimo vaše podatke s trećim stranama u marketinške svrhe. Podaci se mogu obraditi isključivo putem pouzdanih pružatelja usluga (npr. hosting ili analitika) potrebnih za rad stranice.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Kontakt</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0;">Za sva pitanja vezana uz privatnost i obradu podataka javite nam se putem <a href="/kontakt/" style="color:var(--accent);">kontakt stranice</a>. Ova pravila privatnosti mogu se povremeno ažurirati kako bismo osigurali njihovu točnost i usklađenost s propisima.</p>
+  </div>
+</BaseLayout>

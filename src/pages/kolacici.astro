@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteName } from '../data/site';
+---
+<BaseLayout title="Kolačići">
+  <div style="max-width:720px; margin:0 auto; padding:56px 20px 70px;">
+    <h1 style="font-size:clamp(26px,4.5vw,36px); font-weight:800; letter-spacing:-0.02em; margin:0 0 22px;">Kolačići</h1>
+
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">{siteName} koristi kolačiće (cookies) kako bi stranica ispravno funkcionirala i kako bismo razumjeli na koji način čitatelji koriste naš sadržaj. Ova stranica objašnjava koje kolačiće koristimo i zašto.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Što su kolačići</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Kolačići su male tekstualne datoteke koje se pohranjuju u vaš preglednik kada posjetite web stranicu. Koriste se za pamćenje vaših postavki i poboljšanje korisničkog iskustva.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Koje kolačiće koristimo</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Kada prvi put posjetite stranicu, pojavljuje se obavijest s izborom "Prihvaćam" ili "Odbij". Vaš izbor pohranjujemo lokalno u vašem pregledniku (putem tzv. local storage mehanizma) kako vas ne bismo ponovno pitali pri svakom posjetu. Ovo je nužan, tehnički kolačić bez kojeg obavijest o kolačićima ne bi mogla funkcionirati.</p>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Ako prihvatite kolačiće, možemo koristiti i analitičke kolačiće koji nam pomažu razumjeti koliko je čitatelja posjetilo stranicu, koji ih članci najviše zanimaju i kako poboljšati sadržaj. Ti podaci prikupljaju se anonimno i ne koriste se za identifikaciju pojedinačnih posjetitelja.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Upravljanje kolačićima</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">Svoj izbor možete promijeniti u bilo kojem trenutku brisanjem podataka o web stranicama u postavkama vašeg preglednika, nakon čega će vam se obavijest o kolačićima ponovno prikazati. Također možete potpuno onemogućiti kolačiće u postavkama preglednika, no to može utjecati na pojedine funkcionalnosti stranice.</p>
+
+    <h2 style="font-size:20px; font-weight:800; margin:32px 0 12px;">Kontakt</h2>
+    <p style="font-size:16.5px; line-height:1.75; margin:0;">Za dodatna pitanja o korištenju kolačića javite nam se putem <a href="/kontakt/" style="color:var(--accent);">kontakt stranice</a>. Više o obradi osobnih podataka pročitajte u našim <a href="/privatnost/" style="color:var(--accent);">pravilima privatnosti</a>.</p>
+  </div>
+</BaseLayout>
