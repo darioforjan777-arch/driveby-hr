@@ -172,6 +172,17 @@ body {
   }
 }
 
+@keyframes dby-cookie-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Header responsive */
 .dby-desktop {
   display: flex;
@@ -313,7 +324,7 @@ body {
   .dby-toc-mobile,
   .dby-share-print,
   #dby-lightbox,
-  #dby-cookie-banner {
+  #dby-cookie-overlay {
     display: none !important;
   }
   .dby-article-layout {

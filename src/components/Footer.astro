@@ -31,33 +31,138 @@ const year = new Date().getFullYear();
     © {year} {siteName}. Sav sadržaj informativne je naravi i ne zamjenjuje stručni servisni pregled.
   </div>
 
-  <div id="dby-cookie-banner" style="display:none; position:fixed; left:0; right:0; bottom:0; z-index:60; background:var(--bg-surface); border-top:1px solid var(--border); box-shadow:0 -8px 24px rgba(0,0,0,0.1); animation:dby-cookie-in 0.2s ease-out;">
-    <div style="max-width:1200px; margin:0 auto; padding:16px 20px; display:flex; flex-wrap:wrap; align-items:center; gap:14px;">
-      <p style="flex:1; min-width:220px; font-size:13.5px; color:var(--text); margin:0; line-height:1.5;">Koristimo kolačiće za osnovno funkcioniranje stranice i analitiku posjeta. Više u <a href="/kolacici/" style="color:var(--accent);">pravilima o kolačićima</a>.</p>
-      <div style="display:flex; gap:10px; flex-shrink:0;">
-        <button id="dby-cookie-decline" type="button" style="font:inherit; font-size:13px; font-weight:600; padding:9px 16px; border-radius:8px; border:1px solid var(--border); background:none; color:var(--text); cursor:pointer;">Odbij</button>
-        <button id="dby-cookie-accept" type="button" style="font:inherit; font-size:13px; font-weight:700; padding:9px 16px; border-radius:8px; border:none; background:var(--accent); color:#fff; cursor:pointer;">Prihvaćam</button>
+  <div id="dby-cookie-overlay" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(15,15,17,0.55); backdrop-filter:blur(2px); align-items:center; justify-content:center; padding:16px;">
+    <div id="dby-cookie-banner" style="width:100%; max-width:520px; max-height:88vh; overflow-y:auto; background:var(--bg-surface); border:1px solid var(--border); border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,0.25); padding:26px 26px 22px; animation:dby-cookie-modal-in 0.22s ease-out;">
+      <div style="font-size:17px; font-weight:800; color:var(--text); margin-bottom:8px;">Postavke privatnosti</div>
+      <p style="font-size:13.5px; color:var(--text-muted); margin:0 0 18px; line-height:1.6;">Koristimo kolačiće za osnovno funkcioniranje stranice, mjerenje posjeta i prikaz relevantnog sadržaja. Više u <a href="/kolacici/" style="color:var(--accent);">pravilima o kolačićima</a>.</p>
+
+      <div id="dby-cookie-categories" style="display:none; flex-direction:column; gap:12px; margin:0 0 18px; padding-top:4px; border-top:1px solid var(--border); padding-top:16px;">
+        <label style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13.5px; color:var(--text);">
+          <span style="display:flex; align-items:center; gap:7px;">Nužni<span class="dby-cookie-info" title="Nužni za osnovno funkcioniranje stranice, uvijek aktivni.">i</span></span>
+          <input type="checkbox" checked disabled style="width:17px; height:17px; accent-color:var(--accent); opacity:0.7;" />
+        </label>
+        <label style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13.5px; color:var(--text);">
+          <span style="display:flex; align-items:center; gap:7px;">Funkcionalni<span class="dby-cookie-info" title="Omogućuju dodatne funkcionalnosti i personalizaciju stranice.">i</span></span>
+          <input type="checkbox" id="dby-cookie-cat-functional" style="width:17px; height:17px; accent-color:var(--accent);" />
+        </label>
+        <label style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13.5px; color:var(--text);">
+          <span style="display:flex; align-items:center; gap:7px;">Statistički<span class="dby-cookie-info" title="Pomažu nam razumjeti kako posjetitelji koriste stranicu.">i</span></span>
+          <input type="checkbox" id="dby-cookie-cat-statistics" style="width:17px; height:17px; accent-color:var(--accent);" />
+        </label>
+        <label style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13.5px; color:var(--text);">
+          <span style="display:flex; align-items:center; gap:7px;">Marketinški<span class="dby-cookie-info" title="Koriste se za prikaz oglasa relevantnih za vas.">i</span></span>
+          <input type="checkbox" id="dby-cookie-cat-marketing" style="width:17px; height:17px; accent-color:var(--accent);" />
+        </label>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:10px;">
+        <button id="dby-cookie-necessary" type="button" class="dby-cookie-btn" style="flex:1; min-width:140px;">Prihvaćam nužne</button>
+        <button id="dby-cookie-customize" type="button" class="dby-cookie-btn" style="flex:1; min-width:140px;">Prilagodi</button>
+        <button id="dby-cookie-all" type="button" class="dby-cookie-btn" style="flex:1; min-width:140px;">Prihvaćam sve</button>
       </div>
     </div>
   </div>
 </footer>
 
+<style>
+  .dby-cookie-btn {
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 11px 14px;
+    border-radius: 9px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  .dby-cookie-btn:hover {
+    filter: brightness(0.92);
+  }
+  .dby-cookie-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    cursor: help;
+    flex-shrink: 0;
+  }
+</style>
+
 <script>
   function initCookieBanner() {
+    const overlay = document.getElementById('dby-cookie-overlay');
     const banner = document.getElementById('dby-cookie-banner');
-    const accept = document.getElementById('dby-cookie-accept');
-    const decline = document.getElementById('dby-cookie-decline');
+    const categoriesBox = document.getElementById('dby-cookie-categories');
+    const btnNecessary = document.getElementById('dby-cookie-necessary');
+    const btnCustomize = document.getElementById('dby-cookie-customize');
+    const btnAll = document.getElementById('dby-cookie-all');
+    const chkFunctional = document.getElementById('dby-cookie-cat-functional') as HTMLInputElement | null;
+    const chkStatistics = document.getElementById('dby-cookie-cat-statistics') as HTMLInputElement | null;
+    const chkMarketing = document.getElementById('dby-cookie-cat-marketing') as HTMLInputElement | null;
+
+    function showOverlay() {
+      if (!overlay) return;
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    function hideOverlay() {
+      if (!overlay) return;
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    function pushConsent(consent: { functional: boolean; statistics: boolean; marketing: boolean }) {
+      try {
+        localStorage.setItem(
+          'dby-cookie-consent',
+          JSON.stringify({ necessary: true, ...consent, ts: Date.now() })
+        );
+      } catch (e) {}
+      try {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: 'dby_cookie_consent',
+          cookie_consent: { necessary: true, ...consent },
+        });
+      } catch (e) {}
+    }
+
     try {
-      const saved = localStorage.getItem('dby-cookie-choice');
-      if (!saved && banner) banner.style.display = 'block';
-    } catch (e) {}
-    accept?.addEventListener('click', () => {
-      try { localStorage.setItem('dby-cookie-choice', 'accepted'); } catch (e) {}
-      if (banner) banner.style.display = 'none';
+      const saved = localStorage.getItem('dby-cookie-consent');
+      if (!saved) showOverlay();
+    } catch (e) {
+      showOverlay();
+    }
+
+    btnCustomize?.addEventListener('click', () => {
+      if (!categoriesBox) return;
+      const isOpen = categoriesBox.style.display === 'flex';
+      categoriesBox.style.display = isOpen ? 'none' : 'flex';
+      if (btnCustomize) btnCustomize.textContent = isOpen ? 'Prilagodi' : 'Spremi odabir';
+      if (!isOpen) return;
+      pushConsent({
+        functional: !!chkFunctional?.checked,
+        statistics: !!chkStatistics?.checked,
+        marketing: !!chkMarketing?.checked,
+      });
+      hideOverlay();
     });
-    decline?.addEventListener('click', () => {
-      try { localStorage.setItem('dby-cookie-choice', 'declined'); } catch (e) {}
-      if (banner) banner.style.display = 'none';
+
+    btnNecessary?.addEventListener('click', () => {
+      pushConsent({ functional: false, statistics: false, marketing: false });
+      hideOverlay();
+    });
+
+    btnAll?.addEventListener('click', () => {
+      pushConsent({ functional: true, statistics: true, marketing: true });
+      hideOverlay();
     });
   }
   initCookieBanner();
