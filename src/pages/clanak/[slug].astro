@@ -198,7 +198,23 @@ const faqSchema =
     >
       ✕
     </button>
-    <img id="dby-lightbox-img" src="" alt="" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px;" />
+    <div
+      id="dby-lightbox-scroll"
+      style="width:100%; height:100%; overflow:auto; display:flex; align-items:center; justify-content:center;"
+    >
+      <img
+        id="dby-lightbox-img"
+        src=""
+        alt=""
+        style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; cursor:zoom-in;"
+      />
+    </div>
+    <div
+      id="dby-lightbox-hint"
+      style="position:absolute; left:50%; bottom:18px; transform:translateX(-50%); font-size:12px; color:rgba(255,255,255,0.7); background:rgba(0,0,0,0.4); padding:6px 14px; border-radius:20px; pointer-events:none;"
+    >
+      Dodirni sliku za zumiranje
+    </div>
   </div>
 </BaseLayout>
 
@@ -207,11 +223,45 @@ const faqSchema =
     const lightbox = document.getElementById('dby-lightbox');
     const lightboxImg = document.getElementById('dby-lightbox-img') as HTMLImageElement | null;
     const closeBtn = document.getElementById('dby-lightbox-close');
-    if (!lightbox || !lightboxImg || !closeBtn) return;
+    const scrollWrap = document.getElementById('dby-lightbox-scroll');
+    const hint = document.getElementById('dby-lightbox-hint');
+    if (!lightbox || !lightboxImg || !closeBtn || !scrollWrap) return;
+
+    let zoomed = false;
+
+    function resetZoom() {
+      lightboxImg!.style.maxWidth = '100%';
+      lightboxImg!.style.maxHeight = '100%';
+      lightboxImg!.style.width = '';
+      lightboxImg!.style.cursor = 'zoom-in';
+      scrollWrap!.style.alignItems = 'center';
+      scrollWrap!.style.justifyContent = 'center';
+      scrollWrap!.scrollTop = 0;
+      scrollWrap!.scrollLeft = 0;
+      zoomed = false;
+      if (hint) hint.style.display = '';
+    }
+
+    function toggleZoom() {
+      if (!zoomed) {
+        const rect = lightboxImg!.getBoundingClientRect();
+        lightboxImg!.style.maxWidth = 'none';
+        lightboxImg!.style.maxHeight = 'none';
+        lightboxImg!.style.width = `${rect.width * 2.2}px`;
+        lightboxImg!.style.cursor = 'zoom-out';
+        scrollWrap!.style.alignItems = 'flex-start';
+        scrollWrap!.style.justifyContent = 'flex-start';
+        zoomed = true;
+        if (hint) hint.style.display = 'none';
+      } else {
+        resetZoom();
+      }
+    }
 
     function open(src: string, alt: string) {
       lightboxImg!.src = src;
       lightboxImg!.alt = alt;
+      resetZoom();
       lightbox!.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     }
@@ -219,6 +269,7 @@ const faqSchema =
     function close() {
       lightbox!.style.display = 'none';
       lightboxImg!.src = '';
+      resetZoom();
       document.body.style.overflow = '';
     }
 
@@ -230,9 +281,17 @@ const faqSchema =
       }
     });
 
+    lightboxImg.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleZoom();
+    });
+
     closeBtn.addEventListener('click', close);
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) close();
+    });
+    scrollWrap.addEventListener('click', (e) => {
+      if (e.target === scrollWrap) close();
     });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') close();
