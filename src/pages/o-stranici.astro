@@ -3,7 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteName } from '../data/site';
 ---
 
-<BaseLayout title="O stranici">
+<BaseLayout
+  title="O stranici"
+  breadcrumbs={[
+    { name: 'Naslovnica', url: '/' },
+    { name: 'O stranici', url: '/o-stranici/' },
+  ]}
+>
   <div style="max-width:720px; margin:0 auto; padding:56px 20px 70px;">
     <h1 style="font-size:clamp(26px,4.5vw,36px); font-weight:800; letter-spacing:-0.02em; margin:0 0 22px;">O stranici</h1>
     <p style="font-size:16.5px; line-height:1.75; margin:0 0 20px;">{siteName} je nastao iz jednostavne frustracije: prevelik dio sadržaja za hrvatske vozače je ili prenapadan tuning forum ili suhi tehnički priručnik koji ne odgovara na stvarna pitanja s parkinga i iz servisa.</p>

@@ -25,9 +25,57 @@ const toc = bodyToc
 
 const related = article.related.map((s) => getArticleBySlug(s)).filter(Boolean) as typeof articles;
 const shortTitle = article.title.length > 40 ? article.title.slice(0, 40) + '…' : article.title;
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
+const articleUrl = `${siteUrl}/clanak/${article.slug}/`;
+const wordCount = bodyHtml
+  .replace(/<[^>]+>/g, ' ')
+  .split(/\s+/)
+  .filter(Boolean).length;
+
+const blogPostingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: article.title,
+  description: seoDescription,
+  image: coverUrl ? [coverUrl] : undefined,
+  datePublished: article.published,
+  dateModified: article.updated || article.published,
+  author: {
+    '@type': 'Person',
+    name: 'Dario Forjan',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'DriveBy.hr',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/favicon.svg`,
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': articleUrl,
+  },
+  url: articleUrl,
+  articleSection: cat.name,
+  wordCount,
+  timeRequired: `PT${article.readMin}M`,
+  inLanguage: 'hr',
+};
 ---
 
-<BaseLayout title={seoTitle} description={seoDescription} activeCategorySlug={cat.slug}>
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  activeCategorySlug={cat.slug}
+  breadcrumbs={[
+    { name: 'Naslovnica', url: '/' },
+    { name: cat.name, url: `/kategorija/${cat.slug}/` },
+    { name: article.title, url: `/clanak/${article.slug}/` },
+  ]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
   <div style="max-width:1200px; margin:0 auto; padding:32px 20px 70px;">
     <div style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
       <a href="/" style="color:var(--text-muted);" class="link-hover">Naslovnica</a> / <a href={`/kategorija/${cat.slug}/`} style="color:var(--text-muted);" class="link-hover">{cat.name}</a> / <span style="color:var(--text);">{shortTitle}</span>
@@ -53,7 +101,7 @@ const shortTitle = article.title.length > 40 ? article.title.slice(0, 40) + '…
         </div>
 
         {coverUrl && (
-          <img src={coverUrl} alt={article.title} width="1200" height="720" style="width:100%; height:auto; aspect-ratio:5/3; object-fit:cover; border-radius:14px; margin-bottom:28px;" />
+          <img src={coverUrl} alt={article.coverImage?.alt || article.title} width="1200" height="720" style="width:100%; height:auto; aspect-ratio:5/3; object-fit:cover; border-radius:14px; margin-bottom:28px;" />
         )}
 
         <div class="dby-rich-text" style="font-size:15.5px; line-height:1.7; margin:0 0 30px; color:var(--text);" set:html={bodyHtml} />

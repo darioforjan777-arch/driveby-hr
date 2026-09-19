@@ -29,7 +29,7 @@ const categorySections = categories.map((cat) => {
 });
 ---
 
-<BaseLayout title="Praktični vodiči za vozače u Hrvatskoj">
+<BaseLayout title="Praktični vodiči za vozače u Hrvatskoj" breadcrumbs={[{ name: 'Naslovnica', url: '/' }]}>
   <section style="padding:56px 20px 44px; border-bottom:1px solid var(--border);">
     <div class="dby-hero-inner" style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:center; text-align:center; gap:48px;">
       <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:center;">
@@ -81,7 +81,7 @@ const categorySections = categories.map((cat) => {
         <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--accent); margin-bottom:10px;">Izdvojeno</div>
         <a href={`/clanak/${featured.slug}/`} style="display:flex; gap:0; border:1px solid var(--border); border-radius:16px; overflow:hidden; background:var(--bg-surface);" class="dby-hero-inner card-hover">
           {featured.coverImage ? (
-            <img src={urlForImage(featured.coverImage).width(600).height(440).url()} alt={featured.title} style="flex:1; min-width:260px; min-height:220px; object-fit:cover;" />
+            <img src={urlForImage(featured.coverImage).width(600).height(440).url()} alt={featured.coverImage?.alt || featured.title} style="flex:1; min-width:260px; min-height:220px; object-fit:cover;" />
           ) : (
             <div style={`flex:1; min-width:260px; min-height:220px; background:${imgBg(catHue(featured.categorySlug))}; display:flex; align-items:flex-end; padding:16px;`}>
               <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:4px 8px; border-radius:6px;">foto: {featured.title}</span>
@@ -115,7 +115,7 @@ const categorySections = categories.map((cat) => {
           {popular.map((a) => (
             <a href={`/clanak/${a.slug}/`} style="display:flex; align-items:center; gap:14px; padding:14px 16px; border-bottom:1px solid var(--border);" class="link-muted-hover">
               {a.coverImage ? (
-                <img src={urlForImage(a.coverImage).width(112).height(112).url()} alt={a.title} width="56" height="56" style="width:56px; height:56px; border-radius:10px; object-fit:cover; flex-shrink:0;" />
+                <img src={urlForImage(a.coverImage).width(112).height(112).url()} alt={a.coverImage?.alt || a.title} width="56" height="56" style="width:56px; height:56px; border-radius:10px; object-fit:cover; flex-shrink:0;" />
               ) : (
                 <div style={`width:56px; height:56px; border-radius:10px; background:${imgBg(catHue(a.categorySlug))}; flex-shrink:0;`}></div>
               )}

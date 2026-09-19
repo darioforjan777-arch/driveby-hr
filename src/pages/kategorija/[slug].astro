@@ -16,7 +16,15 @@ const list = getArticlesByCategory(cat.slug).sort(
 const popularList = list.filter((a) => a.popular).concat(list.filter((a) => !a.popular));
 ---
 
-<BaseLayout title={cat.name} description={cat.intro} activeCategorySlug={cat.slug}>
+<BaseLayout
+  title={cat.name}
+  description={cat.intro}
+  activeCategorySlug={cat.slug}
+  breadcrumbs={[
+    { name: 'Naslovnica', url: '/' },
+    { name: cat.name, url: `/kategorija/${cat.slug}/` },
+  ]}
+>
   <section style="max-width:1200px; margin:0 auto; padding:40px 20px 8px;">
     <div style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">
       <a href="/" style="color:var(--text-muted);" class="link-hover">Naslovnica</a> / {cat.name}

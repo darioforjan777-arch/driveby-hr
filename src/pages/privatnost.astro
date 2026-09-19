@@ -2,7 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteName } from '../data/site';
 ---
-<BaseLayout title="Pravila privatnosti">
+<BaseLayout
+  title="Pravila privatnosti"
+  breadcrumbs={[
+    { name: 'Naslovnica', url: '/' },
+    { name: 'Privatnost', url: '/privatnost/' },
+  ]}
+>
   <div style="max-width:720px; margin:0 auto; padding:56px 20px 70px;">
     <h1 style="font-size:clamp(26px,4.5vw,36px); font-weight:800; letter-spacing:-0.02em; margin:0 0 22px;">Pravila privatnosti</h1>
 

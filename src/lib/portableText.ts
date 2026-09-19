@@ -1,5 +1,7 @@
 // Minimal Portable Text -> HTML renderer (no React needed).
-// Supports: normal/h3/h4 block styles, bullet/number lists, strong/em marks, plain links.
+// Supports: normal/h3/h4 block styles, bullet/number lists, strong/em marks, plain links, inline images.
+
+import { urlForImage } from './sanity';
 
 interface PTSpan {
   _type: 'span';
@@ -14,6 +16,13 @@ interface PTBlock {
   level?: number;
   children: PTSpan[];
   markDefs?: { _key: string; _type: string; href?: string }[];
+}
+
+interface PTImage {
+  _type: 'image';
+  alt?: string;
+  asset?: { _ref?: string };
+  [key: string]: unknown;
 }
 
 function escapeHtml(s: string): string {
@@ -48,7 +57,14 @@ export interface TocEntry {
   id: string;
 }
 
-export function renderArticleBody(blocks: PTBlock[] | undefined | null): { html: string; toc: TocEntry[] } {
+function renderImage(image: PTImage): string {
+  if (!image?.asset) return '';
+  const alt = escapeHtml(image.alt ?? '');
+  const url = urlForImage(image).width(1200).url();
+  return `<img src="${url}" alt="${alt}" loading="lazy" style="width:100%; height:auto; border-radius:12px; margin:6px 0 20px;" />`;
+}
+
+export function renderArticleBody(blocks: (PTBlock | PTImage)[] | undefined | null): { html: string; toc: TocEntry[] } {
   if (!blocks || blocks.length === 0) return { html: '', toc: [] };
   let html = '';
   let listOpen: 'bullet' | 'number' | null = null;
@@ -61,7 +77,13 @@ export function renderArticleBody(blocks: PTBlock[] | undefined | null): { html:
     listOpen = null;
   };
 
-  for (const block of blocks) {
+  for (const rawBlock of blocks) {
+    if (rawBlock._type === 'image') {
+      closeList();
+      html += renderImage(rawBlock as PTImage);
+      continue;
+    }
+    const block = rawBlock as PTBlock;
     if (block._type !== 'block') continue;
 
     if (block.listItem) {

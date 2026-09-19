@@ -14,7 +14,7 @@ const coverUrl = article.coverImage ? urlForImage(article.coverImage).width(400)
 
 <a href={`/clanak/${article.slug}/`} style="display:flex; flex-direction:column; border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--bg-surface); height:100%;" class="card-hover">
   {coverUrl ? (
-    <img src={coverUrl} alt={article.title} width="400" height="150" style="height:150px; width:100%; object-fit:cover; display:block;" />
+    <img src={coverUrl} alt={article.coverImage?.alt || article.title} width="400" height="150" style="height:150px; width:100%; object-fit:cover; display:block;" />
   ) : (
     <div style={`height:150px; background:${imgBg(hue)}; display:flex; align-items:flex-end; padding:10px; min-width:0;`}>
       <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:3px 7px; border-radius:5px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;">foto: {article.title}</span>

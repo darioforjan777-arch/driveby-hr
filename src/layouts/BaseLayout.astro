@@ -4,14 +4,33 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { siteName } from '../data/site';
 
+interface Crumb {
+  name: string;
+  url: string;
+}
 interface Props {
   title: string;
   description?: string;
   activeCategorySlug?: string;
+  breadcrumbs?: Crumb[];
 }
-const { title, description, activeCategorySlug } = Astro.props;
-const pageTitle = title ? `${title} | ${siteName}` : siteName;
+const { title, description, activeCategorySlug, breadcrumbs } = Astro.props;
+const pageTitle = title || siteName;
 const pageDescription = description ?? 'Praktični vodiči za vozače u Hrvatskoj — tehnički pregled, održavanje, kupnja i prodaja auta.';
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
+const breadcrumbSchema =
+  breadcrumbs && breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: b.name,
+          item: `${siteUrl}${b.url}`,
+        })),
+      }
+    : null;
 ---
 
 <!doctype html>
@@ -24,6 +43,9 @@ const pageDescription = description ?? 'Praktični vodiči za vozače u Hrvatsko
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
     <script is:inline>
       (function () {
         try {
