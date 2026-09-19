@@ -304,3 +304,27 @@ body {
     gap: 28px !important;
   }
 }
+
+/* Print / "Save as PDF" — article pages only need the content itself */
+@media print {
+  header,
+  footer,
+  .dby-toc,
+  .dby-toc-mobile,
+  .dby-share-print,
+  #dby-lightbox,
+  #dby-cookie-banner {
+    display: none !important;
+  }
+  .dby-article-layout {
+    grid-template-columns: 1fr !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+}
