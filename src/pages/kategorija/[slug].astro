@@ -25,40 +25,57 @@ const popularList = list.filter((a) => a.popular).concat(list.filter((a) => !a.p
     { name: cat.name, url: `/kategorija/${cat.slug}/` },
   ]}
 >
-  <section style="max-width:1200px; margin:0 auto; padding:40px 20px 8px;">
-    <div style="font-size:13px; color:var(--text-muted); margin-bottom:14px; display:flex; align-items:center; gap:6px;">
-      <a href="/" aria-label="Naslovnica" title="Naslovnica" style="color:var(--text-muted); display:inline-flex; align-items:center;" class="link-hover">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5Z"></path></svg>
-      </a>
-    </div>
-    <h1 style="font-size:clamp(24px,4vw,34px); font-weight:800; letter-spacing:-0.02em; margin:0 0 12px;">{cat.name}</h1>
-    <p style="font-size:15px; color:var(--text-muted); line-height:1.65; max-width:680px; margin:0;">{cat.intro}</p>
-  </section>
+  <div style="max-width:1200px; margin:0 auto; padding:40px 20px 60px;">
+    <div class="dby-article-layout" style="display:grid; gap:44px;">
+      <aside class="dby-toc" style="position:sticky; top:80px; align-self:start;">
+        <div style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:12px;">Kategorije</div>
+        <div style="display:flex; flex-direction:column; gap:9px;">
+          {categories.map((c) => (
+            <a
+              href={`/kategorija/${c.slug}/`}
+              style={`font-size:13.5px; line-height:1.4; ${c.slug === cat.slug ? 'color:var(--accent); font-weight:700;' : 'color:var(--text-muted);'}`}
+              class="link-hover"
+            >
+              {c.name}
+            </a>
+          ))}
+        </div>
+      </aside>
 
-  <section style="max-width:1200px; margin:0 auto; padding:28px 20px 8px; display:flex; gap:10px; flex-wrap:wrap;">
-    <button type="button" data-filter="sve" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer;">Sve</button>
-    <button type="button" data-filter="najnovije" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); cursor:pointer;">Najnovije</button>
-    <button type="button" data-filter="najcitanije" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); cursor:pointer;">Najčitanije</button>
-  </section>
+      <div style="min-width:0;">
+        <div style="font-size:13px; color:var(--text-muted); margin-bottom:14px; display:flex; align-items:center; gap:6px;">
+          <a href="/" aria-label="Naslovnica" title="Naslovnica" style="color:var(--text-muted); display:inline-flex; align-items:center;" class="link-hover">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5Z"></path></svg>
+          </a>
+        </div>
+        <h1 style="font-size:clamp(24px,4vw,34px); font-weight:800; letter-spacing:-0.02em; margin:0 0 12px;">{cat.name}</h1>
+        <p style="font-size:15px; color:var(--text-muted); line-height:1.65; max-width:680px; margin:0 0 26px;">{cat.intro}</p>
 
-  <section style="max-width:1200px; margin:0 auto; padding:24px 20px 60px;">
-    <div id="dby-grid-sve" class="dby-cat-grid" style="display:grid; gap:22px;">
-      {list.map((a) => (
-        <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
-      ))}
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+          <button type="button" data-filter="sve" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer;">Sve</button>
+          <button type="button" data-filter="najnovije" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); cursor:pointer;">Najnovije</button>
+          <button type="button" data-filter="najcitanije" class="dby-filter-btn" style="font:inherit; font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:20px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); cursor:pointer;">Najčitanije</button>
+        </div>
+
+        <div id="dby-grid-sve" class="dby-cat-grid" style="display:grid; gap:22px;">
+          {list.map((a) => (
+            <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
+          ))}
+        </div>
+        <div id="dby-grid-najnovije" class="dby-cat-grid" style="display:none; gap:22px;">
+          {list.map((a) => (
+            <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
+          ))}
+        </div>
+        <div id="dby-grid-najcitanije" class="dby-cat-grid" style="display:none; gap:22px;">
+          {popularList.map((a) => (
+            <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
+          ))}
+        </div>
+        {list.length === 0 && <p style="color:var(--text-muted); font-size:14px;">Nema članaka za odabrani filter.</p>}
+      </div>
     </div>
-    <div id="dby-grid-najnovije" class="dby-cat-grid" style="display:none; gap:22px;">
-      {list.map((a) => (
-        <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
-      ))}
-    </div>
-    <div id="dby-grid-najcitanije" class="dby-cat-grid" style="display:none; gap:22px;">
-      {popularList.map((a) => (
-        <ArticleCard article={a} catName={cat.name} hue={cat.hue} />
-      ))}
-    </div>
-    {list.length === 0 && <p style="color:var(--text-muted); font-size:14px;">Nema članaka za odabrani filter.</p>}
-  </section>
+  </div>
 </BaseLayout>
 
 <script>
