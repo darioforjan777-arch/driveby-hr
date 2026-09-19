@@ -130,7 +130,10 @@ const faqSchema =
         <div style="display:flex; flex-wrap:wrap; gap:14px; font-size:13px; color:var(--text-muted); margin-bottom:26px; border-bottom:1px solid var(--border); padding-bottom:20px;">
           <span>Objavljeno {fmtDate(article.published)}</span>
           {article.updated && <span>· Ažurirano {fmtDate(article.updated)}</span>}
-          <span>· {article.readMin} min čitanja</span>
+          <span style="display:inline-flex; align-items:center; gap:5px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+            {article.readMin} min
+          </span>
         </div>
 
         {coverUrl && (

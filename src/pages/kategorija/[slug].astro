@@ -26,8 +26,10 @@ const popularList = list.filter((a) => a.popular).concat(list.filter((a) => !a.p
   ]}
 >
   <section style="max-width:1200px; margin:0 auto; padding:40px 20px 8px;">
-    <div style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">
-      <a href="/" style="color:var(--text-muted);" class="link-hover">Naslovnica</a> / {cat.name}
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:14px; display:flex; align-items:center; gap:6px;">
+      <a href="/" aria-label="Naslovnica" title="Naslovnica" style="color:var(--text-muted); display:inline-flex; align-items:center;" class="link-hover">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5Z"></path></svg>
+      </a>
     </div>
     <h1 style="font-size:clamp(24px,4vw,34px); font-weight:800; letter-spacing:-0.02em; margin:0 0 12px;">{cat.name}</h1>
     <p style="font-size:15px; color:var(--text-muted); line-height:1.65; max-width:680px; margin:0;">{cat.intro}</p>
