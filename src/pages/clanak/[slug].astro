@@ -206,7 +206,7 @@ const faqSchema =
         id="dby-lightbox-img"
         src=""
         alt=""
-        style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; cursor:zoom-in;"
+        style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; cursor:zoom-in; touch-action:none; user-select:none;"
       />
     </div>
     <div
@@ -228,6 +228,7 @@ const faqSchema =
     if (!lightbox || !lightboxImg || !closeBtn || !scrollWrap) return;
 
     let zoomed = false;
+    const ZOOM_FACTOR = 2.4;
 
     function resetZoom() {
       lightboxImg!.style.maxWidth = '100%';
@@ -242,17 +243,36 @@ const faqSchema =
       if (hint) hint.style.display = '';
     }
 
-    function toggleZoom() {
+    function zoomAtPoint(clientX: number, clientY: number) {
+      const containerRect = scrollWrap!.getBoundingClientRect();
+      const imgRect = lightboxImg!.getBoundingClientRect();
+
+      // Where on the (currently unzoomed) image did the user click, as a 0..1 fraction.
+      const fx = (clientX - imgRect.left) / imgRect.width;
+      const fy = (clientY - imgRect.top) / imgRect.height;
+
+      const newWidth = imgRect.width * ZOOM_FACTOR;
+      const newHeight = imgRect.height * ZOOM_FACTOR;
+
+      // Lay the image out from the top-left so scrollLeft/scrollTop map directly to pixels.
+      scrollWrap!.style.alignItems = 'flex-start';
+      scrollWrap!.style.justifyContent = 'flex-start';
+      lightboxImg!.style.maxWidth = 'none';
+      lightboxImg!.style.maxHeight = 'none';
+      lightboxImg!.style.width = `${newWidth}px`;
+      lightboxImg!.style.cursor = 'grab';
+
+      // Point the scroll position so the clicked spot stays under the cursor.
+      scrollWrap!.scrollLeft = fx * newWidth - (clientX - containerRect.left);
+      scrollWrap!.scrollTop = fy * newHeight - (clientY - containerRect.top);
+
+      zoomed = true;
+      if (hint) hint.style.display = 'none';
+    }
+
+    function toggleZoom(clientX: number, clientY: number) {
       if (!zoomed) {
-        const rect = lightboxImg!.getBoundingClientRect();
-        lightboxImg!.style.maxWidth = 'none';
-        lightboxImg!.style.maxHeight = 'none';
-        lightboxImg!.style.width = `${rect.width * 2.2}px`;
-        lightboxImg!.style.cursor = 'zoom-out';
-        scrollWrap!.style.alignItems = 'flex-start';
-        scrollWrap!.style.justifyContent = 'flex-start';
-        zoomed = true;
-        if (hint) hint.style.display = 'none';
+        zoomAtPoint(clientX, clientY);
       } else {
         resetZoom();
       }
@@ -281,10 +301,49 @@ const faqSchema =
       }
     });
 
-    lightboxImg.addEventListener('click', (e) => {
+    let dragging = false;
+    let moved = false;
+    let startX = 0;
+    let startY = 0;
+    let startScrollLeft = 0;
+    let startScrollTop = 0;
+
+    lightboxImg.addEventListener('pointerdown', (e) => {
       e.stopPropagation();
-      toggleZoom();
+      dragging = true;
+      moved = false;
+      startX = e.clientX;
+      startY = e.clientY;
+      startScrollLeft = scrollWrap!.scrollLeft;
+      startScrollTop = scrollWrap!.scrollTop;
+      if (zoomed) lightboxImg!.style.cursor = 'grabbing';
+      (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
     });
+
+    lightboxImg.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) > 4 || Math.abs(dy) > 4) moved = true;
+      if (zoomed && moved) {
+        scrollWrap!.scrollLeft = startScrollLeft - dx;
+        scrollWrap!.scrollTop = startScrollTop - dy;
+      }
+    });
+
+    function endDrag(e: PointerEvent) {
+      if (!dragging) return;
+      dragging = false;
+      if (!moved) {
+        // A tap/click without dragging: toggle zoom in/out at that point.
+        toggleZoom(e.clientX, e.clientY);
+      } else if (zoomed) {
+        lightboxImg!.style.cursor = 'grab';
+      }
+    }
+
+    lightboxImg.addEventListener('pointerup', endDrag);
+    lightboxImg.addEventListener('pointercancel', endDrag);
 
     closeBtn.addEventListener('click', close);
     lightbox.addEventListener('click', (e) => {
