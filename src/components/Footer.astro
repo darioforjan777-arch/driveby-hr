@@ -107,12 +107,19 @@ const year = new Date().getFullYear();
 </style>
 
 <script>
+  function setCookie(name: string, value: string, days: number) {
+    try {
+      const maxAge = days * 24 * 60 * 60;
+      document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAge}; SameSite=Lax`;
+    } catch (e) {}
+  }
+
   function initCookieBanner() {
     const overlay = document.getElementById('dby-cookie-overlay');
     const banner = document.getElementById('dby-cookie-banner');
     const categoriesBox = document.getElementById('dby-cookie-categories');
     const btnNecessary = document.getElementById('dby-cookie-necessary');
-    const btnCustomize = document.getElementById('dby-cookie-customize');
+    const btnCustomize = document.getElementById('dby-cookie-customize') || document.getElementById('dby-cookie-save');
     const btnAll = document.getElementById('dby-cookie-all');
     const chkFunctional = document.getElementById('dby-cookie-cat-functional') as HTMLInputElement | null;
     const chkStatistics = document.getElementById('dby-cookie-cat-statistics') as HTMLInputElement | null;
@@ -128,13 +135,16 @@ const year = new Date().getFullYear();
       overlay.style.display = 'none';
       document.body.style.overflow = '';
     }
-    function pushConsent(consent: { functional: boolean; statistics: boolean; marketing: boolean }) {
+    function pushConsent(consent: { functionality: boolean; statistics: boolean; marketing: boolean }) {
       try {
         localStorage.setItem(
           'dby-cookie-consent',
           JSON.stringify({ necessary: true, ...consent, ts: Date.now() })
         );
       } catch (e) {}
+      // Nužni kolačić koji bilježi trenutno stanje cookie consenta po kategorijama
+      // (nužni kolačići se ne bilježe jer se ne mogu odbiti).
+      setCookie('dby-cookie-consent', JSON.stringify(consent), 180);
       try {
         (window as any).dataLayer = (window as any).dataLayer || [];
         (window as any).dataLayer.push({
@@ -152,13 +162,16 @@ const year = new Date().getFullYear();
     }
 
     btnCustomize?.addEventListener('click', () => {
-      if (!categoriesBox) return;
-      const isOpen = categoriesBox.style.display === 'flex';
-      categoriesBox.style.display = isOpen ? 'none' : 'flex';
-      if (btnCustomize) btnCustomize.textContent = isOpen ? 'Prilagodi' : 'Spremi odabir';
-      if (!isOpen) return;
+      if (!categoriesBox || !btnCustomize) return;
+      const isSaveStep = btnCustomize.id === 'dby-cookie-save';
+      if (!isSaveStep) {
+        categoriesBox.style.display = 'flex';
+        btnCustomize.id = 'dby-cookie-save';
+        btnCustomize.textContent = 'Spremi odabir';
+        return;
+      }
       pushConsent({
-        functional: !!chkFunctional?.checked,
+        functionality: !!chkFunctional?.checked,
         statistics: !!chkStatistics?.checked,
         marketing: !!chkMarketing?.checked,
       });
@@ -166,12 +179,12 @@ const year = new Date().getFullYear();
     });
 
     btnNecessary?.addEventListener('click', () => {
-      pushConsent({ functional: false, statistics: false, marketing: false });
+      pushConsent({ functionality: false, statistics: false, marketing: false });
       hideOverlay();
     });
 
     btnAll?.addEventListener('click', () => {
-      pushConsent({ functional: true, statistics: true, marketing: true });
+      pushConsent({ functionality: true, statistics: true, marketing: true });
       hideOverlay();
     });
   }
