@@ -19,14 +19,11 @@ function escapeXml(s: string): string {
 
 interface SitemapImage {
   loc: string;
-  caption?: string;
 }
 
 interface SitemapUrl {
   loc: string;
   lastmod?: string;
-  changefreq?: string;
-  priority?: string;
   images?: SitemapImage[];
 }
 
@@ -44,11 +41,11 @@ export const GET: APIRoute = ({ site }) => {
   const urls: SitemapUrl[] = [];
 
   // Naslovnica
-  urls.push({ loc: `${siteUrl}/`, lastmod: latestArticleDate, changefreq: 'daily', priority: '1.0' });
+  urls.push({ loc: `${siteUrl}/`, lastmod: latestArticleDate });
 
   // Statične stranice
   for (const path of ['o-stranici', 'kontakt', 'privatnost', 'kolacici']) {
-    urls.push({ loc: `${siteUrl}/${path}/`, lastmod: buildDate, changefreq: 'monthly', priority: '0.4' });
+    urls.push({ loc: `${siteUrl}/${path}/`, lastmod: buildDate });
   }
 
   // Kategorije
@@ -60,36 +57,23 @@ export const GET: APIRoute = ({ site }) => {
         .filter(Boolean)
         .sort()
         .reverse()[0] ?? buildDate;
-    urls.push({
-      loc: `${siteUrl}/kategorija/${cat.slug}/`,
-      lastmod: catLastmod,
-      changefreq: 'weekly',
-      priority: '0.7',
-    });
+    urls.push({ loc: `${siteUrl}/kategorija/${cat.slug}/`, lastmod: catLastmod });
   }
 
   // Članci — s lastmod i svim slikama (naslovna + slike unutar tijela teksta)
   for (const a of articles) {
     const images: SitemapImage[] = [];
     if (a.coverImage) {
-      images.push({
-        loc: urlForImage(a.coverImage).width(1200).url(),
-        caption: a.title,
-      });
+      images.push({ loc: urlForImage(a.coverImage).width(1200).url() });
     }
     for (const block of a.body ?? []) {
       if (block?._type === 'image' && block.asset) {
-        images.push({
-          loc: urlForImage(block).width(1200).url(),
-          caption: block.alt || a.title,
-        });
+        images.push({ loc: urlForImage(block).width(1200).url() });
       }
     }
     urls.push({
       loc: `${siteUrl}/clanak/${a.slug}/`,
       lastmod: a.updated || a.published || buildDate,
-      changefreq: 'monthly',
-      priority: '0.9',
       images,
     });
   }
@@ -100,11 +84,11 @@ ${urls
   .map(
     (u) => `  <url>
     <loc>${escapeXml(u.loc)}</loc>
-${u.lastmod ? `    <lastmod>${u.lastmod}</lastmod>\n` : ''}${u.changefreq ? `    <changefreq>${u.changefreq}</changefreq>\n` : ''}${u.priority ? `    <priority>${u.priority}</priority>\n` : ''}${(u.images ?? [])
+${u.lastmod ? `    <lastmod>${u.lastmod}</lastmod>\n` : ''}${(u.images ?? [])
       .map(
         (img) => `    <image:image>
       <image:loc>${escapeXml(img.loc)}</image:loc>
-${img.caption ? `      <image:caption>${escapeXml(img.caption)}</image:caption>\n` : ''}    </image:image>
+    </image:image>
 `
       )
       .join('')}  </url>`
