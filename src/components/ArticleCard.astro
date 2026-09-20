@@ -9,7 +9,7 @@ interface Props {
   hue: number;
 }
 const { article, catName, hue } = Astro.props;
-const coverUrl = article.coverImage ? urlForImage(article.coverImage).width(400).height(240).url() : null;
+const coverUrl = article.coverImage ? urlForImage(article.coverImage).width(800).url() : null;
 ---
 
 <a href={`/clanak/${article.slug}/`} style="display:flex; flex-direction:column; border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--bg-surface); height:100%;" class="card-hover">
