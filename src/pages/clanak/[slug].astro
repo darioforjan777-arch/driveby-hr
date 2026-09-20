@@ -23,7 +23,7 @@ const toc = bodyToc
   .map((t) => ({ label: t.label, href: `#${t.id}` }))
   .concat(article.faq?.length ? [{ label: 'Često postavljana pitanja', href: '#faq' }] : []);
 
-const related = article.related.map((s) => getArticleBySlug(s)).filter(Boolean) as typeof articles;
+const related = (article.related ?? []).map((s) => getArticleBySlug(s)).filter(Boolean) as typeof articles;
 
 const mobileTocHtml =
   toc.length > 0
