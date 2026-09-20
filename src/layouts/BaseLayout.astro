@@ -13,8 +13,9 @@ interface Props {
   description?: string;
   activeCategorySlug?: string;
   breadcrumbs?: Crumb[];
+  readingProgress?: boolean;
 }
-const { title, description, activeCategorySlug, breadcrumbs } = Astro.props;
+const { title, description, activeCategorySlug, breadcrumbs, readingProgress } = Astro.props;
 const pageTitle = title || siteName;
 const pageDescription = description ?? 'Praktični vodiči za vozače u Hrvatskoj — tehnički pregled, održavanje, kupnja i prodaja auta.';
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
@@ -82,7 +83,7 @@ const breadcrumbSchema =
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
     <div style="min-height:100vh; display:flex; flex-direction:column;">
-      <Header activeCategorySlug={activeCategorySlug} />
+      <Header activeCategorySlug={activeCategorySlug} readingProgress={readingProgress} />
       <main style="flex:1;">
         <slot />
       </main>

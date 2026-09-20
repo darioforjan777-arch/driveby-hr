@@ -103,6 +103,7 @@ const faqSchema =
   title={seoTitle}
   description={seoDescription}
   activeCategorySlug={cat.slug}
+  readingProgress
   breadcrumbs={[
     { name: 'Naslovnica', url: '/' },
     { name: cat.name, url: `/kategorija/${cat.slug}/` },
@@ -132,7 +133,7 @@ const faqSchema =
         </div>
       </aside>
 
-      <article style="min-width:0;">
+      <article id="dby-article-content" style="min-width:0;">
         <div style="font-size:12.5px; font-weight:700; color:var(--accent); margin-bottom:10px;">{cat.name}</div>
         <h1 style="font-size:clamp(26px,4.5vw,38px); font-weight:800; letter-spacing:-0.02em; line-height:1.2; margin:0 0 14px;">{article.title}</h1>
         <div style="display:flex; flex-wrap:wrap; gap:14px; font-size:13px; color:var(--text-muted); margin-bottom:26px; border-bottom:1px solid var(--border); padding-bottom:20px;">
