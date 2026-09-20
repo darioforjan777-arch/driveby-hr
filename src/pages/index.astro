@@ -27,7 +27,7 @@ const searchData = articles.map((a) => ({
   slug: a.slug,
   cat: catName(a.categorySlug),
   hue: catHue(a.categorySlug),
-  cover: a.coverImage ? urlForImage(a.coverImage).width(800).height(300).url() : null,
+  cover: a.coverImage ? urlForImage(a.coverImage).width(800).height(450).url() : null,
   readMin: a.readMin,
 }));
 ---
@@ -193,8 +193,8 @@ const searchData = articles.map((a) => ({
 
   function cardHtml(a: SearchArticle): string {
     const img = a.cover
-      ? `<img src="${a.cover}" alt="${escapeHtml(a.title)}" width="400" height="150" loading="lazy" decoding="async" style="height:150px; width:100%; object-fit:cover; display:block;" />`
-      : `<div style="height:150px; background:${imgBgJs(a.hue)}; display:flex; align-items:flex-end; padding:10px; min-width:0;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:3px 7px; border-radius:5px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;">foto: ${escapeHtml(a.title)}</span></div>`;
+      ? `<img src="${a.cover}" alt="${escapeHtml(a.title)}" width="800" height="450" loading="lazy" decoding="async" style="aspect-ratio:16/9; width:100%; height:auto; object-fit:cover; display:block;" />`
+      : `<div style="aspect-ratio:16/9; background:${imgBgJs(a.hue)}; display:flex; align-items:flex-end; padding:10px; min-width:0;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:3px 7px; border-radius:5px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;">foto: ${escapeHtml(a.title)}</span></div>`;
     return `<a href="/clanak/${a.slug}/" style="display:flex; flex-direction:column; border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--bg-surface); height:100%; text-decoration:none; color:inherit;" class="card-hover">
       ${img}
       <div style="padding:16px 16px 18px; display:flex; flex-direction:column; flex:1; min-width:0;">
