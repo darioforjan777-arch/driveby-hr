@@ -68,7 +68,7 @@ function renderImage(image: PTImage): string {
   if (!image?.asset) return '';
   const alt = escapeHtml(image.alt ?? '');
   const url = urlForImage(image).width(1200).url();
-  return `<img src="${url}" alt="${alt}" loading="lazy" class="dby-lightbox-img" style="width:100%; height:auto; border-radius:12px; margin:6px 0 20px; cursor:zoom-in;" />`;
+  return `<img src="${url}" alt="${alt}" width="1200" loading="lazy" decoding="async" class="dby-lightbox-img" style="width:100%; height:auto; border-radius:12px; margin:6px 0 20px; cursor:zoom-in;" />`;
 }
 
 function renderTable(table: PTTable): string {
