@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import { getCategory, fmtDate } from '../../data/site';
+import { getCategory, fmtDate, siteName } from '../../data/site';
 import { articles, getArticleBySlug } from '../../data/articles';
 import { renderArticleBody, escapeHtml } from '../../lib/portableText';
 import { urlForImage } from '../../lib/sanity';
@@ -51,25 +51,50 @@ const wordCount = bodyHtml
   .split(/\s+/)
   .filter(Boolean).length;
 
+// Google preporuča naslovnu sliku u 3 omjera (16:9, 4:3, 1:1), svaka min. 696px širine,
+// za bolju kompatibilnost s rich results-ima.
+const imageObjects = article.coverImage
+  ? [
+      { ratio: [1200, 675] as const },
+      { ratio: [1200, 900] as const },
+      { ratio: [1200, 1200] as const },
+    ].map(({ ratio: [w, h] }) => ({
+      '@type': 'ImageObject' as const,
+      url: urlForImage(article.coverImage).width(w).height(h).url(),
+      width: w,
+      height: h,
+    }))
+  : undefined;
+const thumbnailUrl = article.coverImage ? urlForImage(article.coverImage).width(400).height(300).url() : undefined;
+const publishedYear = article.published?.slice(0, 4);
+
 const blogPostingSchema = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   headline: article.title,
   description: seoDescription,
-  image: coverUrl ? [coverUrl] : undefined,
+  image: imageObjects,
+  thumbnailUrl,
   datePublished: article.published,
   dateModified: article.updated || article.published,
   author: {
     '@type': 'Person',
     name: 'Dario Forjan',
+    url: `${siteUrl}/o-stranici/`,
   },
   publisher: {
     '@type': 'Organization',
-    name: 'DriveBy.hr',
+    name: siteName,
+    url: siteUrl,
     logo: {
       '@type': 'ImageObject',
       url: `${siteUrl}/favicon.svg`,
     },
+  },
+  isPartOf: {
+    '@type': 'WebSite',
+    name: siteName,
+    url: siteUrl,
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
@@ -77,9 +102,16 @@ const blogPostingSchema = {
   },
   url: articleUrl,
   articleSection: cat.name,
+  keywords: cat.name,
   wordCount,
   timeRequired: `PT${article.readMin}M`,
   inLanguage: 'hr',
+  isAccessibleForFree: true,
+  ...(publishedYear ? { copyrightYear: Number(publishedYear) } : {}),
+  copyrightHolder: {
+    '@type': 'Organization',
+    name: siteName,
+  },
 };
 
 const faqSchema =
