@@ -27,7 +27,7 @@ const searchData = articles.map((a) => ({
   slug: a.slug,
   cat: catName(a.categorySlug),
   hue: catHue(a.categorySlug),
-  cover: a.coverImage ? urlForImage(a.coverImage).width(800).url() : null,
+  cover: a.coverImage ? urlForImage(a.coverImage).width(800).height(300).url() : null,
   readMin: a.readMin,
 }));
 ---
