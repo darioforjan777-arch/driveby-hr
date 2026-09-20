@@ -17,5 +17,9 @@ export const sanityClient = createClient({
 const builder = createImageUrlBuilder(sanityClient);
 
 export function urlForImage(source: any) {
-  return builder.image(source);
+  // auto('format') lets Sanity's CDN serve WebP/AVIF to browsers that support it
+  // (falling back to the original format otherwise), and quality(75) trims file
+  // size without a visible drop in quality. fit('max') stops it from ever
+  // upscaling past the original image's dimensions.
+  return builder.image(source).auto('format').quality(75).fit('max');
 }
