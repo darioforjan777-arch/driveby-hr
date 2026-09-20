@@ -51,11 +51,11 @@ export const categories: Category[] = [
       'Praktični savjeti za kupnju rabljenog vozila i uspješnu prodaju – checkliste, ugovori i procjena realne cijene.',
   },
   {
-    slug: 'recenzije',
-    name: 'Recenzije i iskustva s modelima',
+    slug: 'samostalni-popravci',
+    name: 'Samostalni popravci i DIY',
     hue: 200,
     intro:
-      'Iskustva vlasnika i detaljne recenzije popularnih modela – prednosti, mane i najčešći kvarovi iz prve ruke.',
+      'Vodiči korak po korak za popravke koje možeš odraditi sam u garaži – uz pravi alat, malo strpljenja i bez nepotrebnog odlaska u servis.',
   },
   {
     slug: 'oprema',
@@ -86,9 +86,9 @@ export const authors: Record<string, { name: string; bio: string }> = {
     name: 'Domagoj Kilometar',
     bio: 'Kupio i prodao više auta nego što bi trebao. Sve checkliste u ovoj kategoriji testirao je na vlastitoj koži.',
   },
-  recenzije: {
-    name: 'Ana Volan',
-    bio: 'Skuplja iskustva vlasnika i servisera da bi recenzije bile bliže stvarnosti, a dalje od reklamnih brošura.',
+  'samostalni-popravci': {
+    name: 'Tomislav Ključ',
+    bio: 'Garažu zove drugim domom. Vjeruje da 80% popravaka svatko može odraditi sam uz pravi alat i malo strpljenja.',
   },
   oprema: {
     name: 'Filip Alat',
