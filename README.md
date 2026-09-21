@@ -1,4 +1,4 @@
-# DriveBy.hr — auto blog
+# DriveByHR (drivebyhr.com) — auto blog
 
 Astro projekt za blog o autima (tehnički pregled, održavanje, kupnja/prodaja, recenzije, oprema, novosti).
 

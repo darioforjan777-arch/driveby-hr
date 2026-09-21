@@ -1,4 +1,4 @@
-export const siteName = 'DriveBy.hr';
+export const siteName = 'DriveByHR';
 
 export const theme = {
   light: {

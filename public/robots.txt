@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /
 
-Sitemap: https://driveby-hr.vercel.app/sitemap.xml
+Sitemap: https://drivebyhr.com/sitemap.xml
