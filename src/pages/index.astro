@@ -141,37 +141,8 @@ const searchData = articles.map((a) => ({
         </section>
       ))}
 
-      <section style="max-width:1200px; margin:44px auto 60px; padding:0 20px;">
-        <div style="border-radius:16px; background:var(--bg-surface-2); border:1px solid var(--border); padding:36px 28px; display:flex; flex-wrap:wrap; gap:24px; align-items:center; justify-content:space-between;">
-          <div style="max-width:420px;">
-            <h2 style="font-size:19px; font-weight:800; margin:0 0 8px;">Novi vodič svaki tjedan u inbox</h2>
-            <p style="font-size:14px; color:var(--text-muted); margin:0; line-height:1.6;">Bez spama, bez guranja proizvoda. Samo praktični sadržaj za vozače.</p>
-          </div>
-          <div id="dby-newsletter-wrap">
-            <form id="dby-newsletter-form" style="display:flex; gap:10px; flex-wrap:wrap;">
-              <input id="dby-newsletter-email" type="email" required placeholder="vasa@email.hr" style="font:inherit; font-size:14px; padding:12px 16px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); color:var(--text); outline:none; min-width:220px;" />
-              <button type="submit" style="font:inherit; font-size:14px; font-weight:700; padding:12px 20px; border-radius:10px; border:none; background:var(--accent); color:#fff; cursor:pointer;">Prijavi se</button>
-            </form>
-            <div id="dby-newsletter-thanks" style="display:none; font-size:14.5px; font-weight:600; color:var(--accent);">Hvala na prijavi! Provjerite inbox za potvrdu.</div>
-          </div>
-        </div>
-      </section>
   </div>
 </BaseLayout>
-
-<script>
-  function initNewsletter() {
-    const form = document.getElementById('dby-newsletter-form');
-    const thanks = document.getElementById('dby-newsletter-thanks');
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (form instanceof HTMLElement) form.style.display = 'none';
-      if (thanks) thanks.style.display = 'block';
-    });
-  }
-  initNewsletter();
-  document.addEventListener('astro:page-load', initNewsletter);
-</script>
 
 <script>
   function escapeHtml(s: string): string {
