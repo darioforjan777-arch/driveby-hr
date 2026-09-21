@@ -58,8 +58,16 @@ body {
   background: var(--bg-surface-2);
 }
 
+.dby-rich-text {
+  font-size: 15.5px;
+}
 .dby-rich-text p {
   margin: 0 0 14px;
+}
+@media (min-width: 901px) {
+  .dby-rich-text {
+    font-size: 18px;
+  }
 }
 .dby-rich-text h2 {
   font-size: 21px;
