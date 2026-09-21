@@ -78,7 +78,7 @@ const searchData = articles.map((a) => ({
         <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--accent); margin-bottom:10px;">Izdvojeno</div>
         <a href={`/clanak/${featured.slug}/`} style="display:flex; gap:0; border:1px solid var(--border); border-radius:16px; overflow:hidden; background:var(--bg-surface);" class="dby-hero-inner card-hover">
           {featured.coverImage ? (
-            <img src={urlForImage(featured.coverImage).width(900).url()} alt={featured.coverImage?.alt || featured.title} loading="eager" fetchpriority="high" decoding="async" style="flex:1; min-width:260px; min-height:220px; object-fit:cover;" />
+            <img src={urlForImage(featured.coverImage).width(900).height(560).url()} alt={featured.coverImage?.alt || featured.title} width="900" height="560" loading="eager" fetchpriority="high" decoding="async" style="flex:1; min-width:260px; height:auto; aspect-ratio:900/560; object-fit:cover;" />
           ) : (
             <div style={`flex:1; min-width:260px; min-height:220px; background:${imgBg(catHue(featured.categorySlug))}; display:flex; align-items:flex-end; padding:16px;`}>
               <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#1c1b1a; background:rgba(255,255,255,0.85); padding:4px 8px; border-radius:6px;">foto: {featured.title}</span>

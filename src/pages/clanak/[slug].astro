@@ -66,6 +66,7 @@ const imageObjects = article.coverImage
     }))
   : undefined;
 const thumbnailUrl = article.coverImage ? urlForImage(article.coverImage).width(400).height(300).url() : undefined;
+const ogImageUrl = article.coverImage ? urlForImage(article.coverImage).width(1200).height(630).url() : undefined;
 const publishedYear = article.published?.slice(0, 4);
 
 const blogPostingSchema = {
@@ -136,6 +137,8 @@ const faqSchema =
   description={seoDescription}
   activeCategorySlug={cat.slug}
   readingProgress
+  ogImage={ogImageUrl}
+  ogType="article"
   breadcrumbs={[
     { name: 'Naslovnica', url: '/' },
     { name: cat.name, url: `/kategorija/${cat.slug}/` },

@@ -14,12 +14,15 @@ interface Props {
   activeCategorySlug?: string;
   breadcrumbs?: Crumb[];
   readingProgress?: boolean;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
 }
-const { title, description, activeCategorySlug, breadcrumbs, readingProgress } = Astro.props;
+const { title, description, activeCategorySlug, breadcrumbs, readingProgress, ogImage, ogType } = Astro.props;
 const pageTitle = title || siteName;
 const pageDescription = description ?? 'Praktični vodiči za vozače u Hrvatskoj – tehnički pregled, održavanje, kupnja i prodaja auta.';
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
 const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const ogImageUrl = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : `${siteUrl}/og-default.jpg`;
 const breadcrumbSchema =
   breadcrumbs && breadcrumbs.length > 0
     ? {
@@ -43,19 +46,47 @@ const breadcrumbSchema =
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#2563eb" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType ?? 'website'} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="hr_HR" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={pageTitle} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.sanity.io" />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=optional"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=optional"
       />
     </noscript>
     <!-- Google Tag Manager -->
