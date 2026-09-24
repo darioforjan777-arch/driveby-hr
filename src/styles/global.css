@@ -239,6 +239,13 @@ body {
   .dby-hero-inner {
     flex-direction: column !important;
   }
+  .dby-featured-media {
+    flex: none !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16/9 !important;
+    min-height: 0 !important;
+  }
   .dby-hero-search {
     width: 100% !important;
   }
