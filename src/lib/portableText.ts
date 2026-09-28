@@ -40,6 +40,12 @@ interface PTTable3 {
   rows?: { col1?: string; col2?: string; col3?: string }[];
 }
 
+interface PTFlexTable {
+  _type: 'flexTable';
+  headers?: string[];
+  rows?: { cells?: string[] }[];
+}
+
 export function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
@@ -106,7 +112,22 @@ function renderTable3(table: PTTable3): string {
   return `<div class="dby-table-wrap"><table><thead><tr><th>${h1}</th><th>${h2}</th><th>${h3}</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
 
-export function renderArticleBody(blocks: (PTBlock | PTImage | PTTable | PTTable3)[] | undefined | null): { html: string; toc: TocEntry[] } {
+function renderFlexTable(table: PTFlexTable): string {
+  const headers = table.headers ?? [];
+  const rows = table.rows ?? [];
+  if (headers.length === 0 || rows.length === 0) return '';
+  const headHtml = headers.map((h) => `<th>${escapeHtml(h ?? '')}</th>`).join('');
+  const bodyHtml = rows
+    .map((r) => {
+      const cells = r.cells ?? [];
+      const tds = headers.map((_, i) => `<td>${escapeHtml(cells[i] ?? '')}</td>`).join('');
+      return `<tr>${tds}</tr>`;
+    })
+    .join('');
+  return `<div class="dby-table-wrap"><table><thead><tr>${headHtml}</tr></thead><tbody>${bodyHtml}</tbody></table></div>`;
+}
+
+export function renderArticleBody(blocks: (PTBlock | PTImage | PTTable | PTTable3 | PTFlexTable)[] | undefined | null): { html: string; toc: TocEntry[] } {
   if (!blocks || blocks.length === 0) return { html: '', toc: [] };
   let html = '';
   let listOpen: 'bullet' | 'number' | null = null;
@@ -133,6 +154,11 @@ export function renderArticleBody(blocks: (PTBlock | PTImage | PTTable | PTTable
     if (rawBlock._type === 'table3') {
       closeList();
       html += renderTable3(rawBlock as PTTable3);
+      continue;
+    }
+    if (rawBlock._type === 'flexTable') {
+      closeList();
+      html += renderFlexTable(rawBlock as PTFlexTable);
       continue;
     }
     const block = rawBlock as PTBlock;
