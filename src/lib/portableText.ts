@@ -32,6 +32,14 @@ interface PTTable {
   rows?: { label?: string; value?: string }[];
 }
 
+interface PTTable3 {
+  _type: 'table3';
+  headerCol1?: string;
+  headerCol2?: string;
+  headerCol3?: string;
+  rows?: { col1?: string; col2?: string; col3?: string }[];
+}
+
 export function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
@@ -84,7 +92,21 @@ function renderTable(table: PTTable): string {
   return `<div class="dby-table-wrap"><table><thead><tr><th>${h1}</th><th>${h2}</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
 
-export function renderArticleBody(blocks: (PTBlock | PTImage | PTTable)[] | undefined | null): { html: string; toc: TocEntry[] } {
+function renderTable3(table: PTTable3): string {
+  const rows = table.rows ?? [];
+  if (rows.length === 0) return '';
+  const h1 = escapeHtml(table.headerCol1 ?? '');
+  const h2 = escapeHtml(table.headerCol2 ?? '');
+  const h3 = escapeHtml(table.headerCol3 ?? '');
+  const body = rows
+    .map(
+      (r) => `<tr><td>${escapeHtml(r.col1 ?? '')}</td><td>${escapeHtml(r.col2 ?? '')}</td><td>${escapeHtml(r.col3 ?? '')}</td></tr>`
+    )
+    .join('');
+  return `<div class="dby-table-wrap"><table><thead><tr><th>${h1}</th><th>${h2}</th><th>${h3}</th></tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
+export function renderArticleBody(blocks: (PTBlock | PTImage | PTTable | PTTable3)[] | undefined | null): { html: string; toc: TocEntry[] } {
   if (!blocks || blocks.length === 0) return { html: '', toc: [] };
   let html = '';
   let listOpen: 'bullet' | 'number' | null = null;
@@ -106,6 +128,11 @@ export function renderArticleBody(blocks: (PTBlock | PTImage | PTTable)[] | unde
     if (rawBlock._type === 'table') {
       closeList();
       html += renderTable(rawBlock as PTTable);
+      continue;
+    }
+    if (rawBlock._type === 'table3') {
+      closeList();
+      html += renderTable3(rawBlock as PTTable3);
       continue;
     }
     const block = rawBlock as PTBlock;
