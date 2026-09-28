@@ -242,6 +242,23 @@ const faqSchema =
     </div>
   </div>
 
+  {toc.length > 0 && (
+    <div id="dby-toc-fab-wrap" class="dby-toc-fab-wrap">
+      <div id="dby-toc-panel" class="dby-toc-panel" role="dialog" aria-label="Sadržaj članka">
+        <div class="dby-toc-panel-title">Sadržaj</div>
+        <div class="dby-toc-panel-list">
+          {toc.map((t, i) => (
+            <a href={t.href} data-toc-link data-toc-index={i}>{t.label}</a>
+          ))}
+        </div>
+      </div>
+      <button type="button" id="dby-toc-fab" class="dby-toc-fab" aria-expanded="false" aria-controls="dby-toc-panel">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dby-toc-fab-icon"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        <span id="dby-toc-fab-label" class="dby-toc-fab-label">Sadržaj</span>
+      </button>
+    </div>
+  )}
+
   <div
     id="dby-lightbox"
     style="display:none; position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; padding:24px;"
@@ -469,4 +486,73 @@ const faqSchema =
   }
   initShareAndPrint();
   document.addEventListener('astro:page-load', initShareAndPrint);
+</script>
+
+<script>
+  function initMobileToc() {
+    const wrap = document.getElementById('dby-toc-fab-wrap');
+    const fab = document.getElementById('dby-toc-fab');
+    const panel = document.getElementById('dby-toc-panel');
+    const fabLabel = document.getElementById('dby-toc-fab-label');
+    if (!wrap || !fab || !panel || !fabLabel) return;
+
+    const links = Array.from(panel.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+    if (links.length === 0) return;
+
+    const headings = links
+      .map((link) => {
+        const id = (link.getAttribute('href') || '').replace('#', '');
+        return { link, el: id ? document.getElementById(id) : null };
+      })
+      .filter((h): h is { link: HTMLAnchorElement; el: HTMLElement } => !!h.el);
+
+    function setOpen(open: boolean) {
+      wrap!.classList.toggle('dby-toc-open', open);
+      fab!.setAttribute('aria-expanded', String(open));
+    }
+
+    fab.addEventListener('click', () => {
+      setOpen(!wrap!.classList.contains('dby-toc-open'));
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!wrap!.contains(e.target as Node)) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        setOpen(false);
+      });
+    });
+
+    function setActive(index: number) {
+      links.forEach((l, i) => l.classList.toggle('dby-toc-active', i === index));
+      fabLabel!.textContent = links[index]?.textContent || 'Sadržaj';
+    }
+
+    if (headings.length > 0) {
+      setActive(0);
+      let currentIndex = 0;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const idx = headings.findIndex((h) => h.el === entry.target);
+            if (idx !== -1) {
+              currentIndex = idx;
+              setActive(currentIndex);
+            }
+          }
+        },
+        { rootMargin: '-88px 0px -70% 0px', threshold: 0 }
+      );
+      headings.forEach((h) => observer.observe(h.el));
+    }
+  }
+  initMobileToc();
+  document.addEventListener('astro:page-load', initMobileToc);
 </script>
